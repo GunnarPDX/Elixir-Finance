@@ -39,6 +39,16 @@ defmodule Financials do
     revenue - cogs - operating_expenses
   end
 
+  # earnings before interest, taxes, and amortization
+  def ebita(revenue, cogs, operating_expenses, amortization) do
+    revenue - cogs - (operating_expenses + amortization)
+  end
+
+  # earnings before interest, taxes, depreciation, and amortization
+  def ebitda(net_income, interest_expense, taxes, depreciation, amortization) do
+    net_income + interest_expense + taxes + depreciation + amortization
+  end
+
   ###-------------------------------------------------
 
   def eps_basic(earnings, shares_outstanding) do
