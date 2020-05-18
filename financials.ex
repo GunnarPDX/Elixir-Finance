@@ -102,6 +102,41 @@ defmodule Financials do
 
   ###-------------------------------------------------
 
+  def capitalization_ratio(total_debt, shareholders_equity) do
+    Float.round(total_debt/(total_debt + shareholders_equity), @two_decimal_precision)
+  end
+
+  ###-------------------------------------------------
+
+  # TODO: days_inventory_outstanding
+  # TODO: days_sales_outstanding
+  # TODO: days_payables_outstanding
+
+  def cash_conversion_cycle(days_inventory_outstanding, days_sales_outstanding, days_payables_outstanding) do
+    days_inventory_outstanding + days_sales_outstanding + days_payables_outstanding
+  end
+
+  ###-------------------------------------------------
+
+  def cash_flow_coverage(operating_cash_flows, total_debt) do
+    Float.round(operating_cash_flows/total_debt, @two_decimal_precision)
+  end
+
+  def cash_ratio(cash, cash_equivalents, total_current_liabilities) do
+    Float.round((cash + cash_equivalents)/total_current_liabilities, @two_decimal_precision)
+  end
+
+  ###-------------------------------------------------
+
+  # compund annual growth rate
+  def cagr(beginning_investment_value, ending_investment_value, years) do
+    value_ratio = Float.round(beginning_investment_value/ending_investment_value, @two_decimal_precision)
+    time_ratio = Float.round(1/years, @two_decimal_precision)
+    :math.pow(value_ratio,time_ratio) - 1
+  end
+
+  ###-------------------------------------------------
+
   def eps_basic(earnings, shares_outstanding) do
     Float.round(earnings/shares_outstanding, @two_decimal_precision)
   end
