@@ -75,6 +75,14 @@ defmodule Financials do
     Float.round(accumulated_depreciation/total_fixed_assets, @two_decimal_precision)
   end
 
+  def asset_coverage(total_assets, intangible_assets, current_liabilities, short_term_debt, total_debt) do
+    Float.round(((total_assets - intangible_assets) - (current_liabilities - short_term_debt))/total_debt, @two_decimal_precision)
+  end
+
+  def asset_turnover(net_sales, average_total_sales) do
+    Float.round(net_sales/average_total_sales, @two_decimal_precision)
+  end
+
   ###-------------------------------------------------
 
   def eps_basic(earnings, shares_outstanding) do
