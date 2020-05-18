@@ -89,6 +89,17 @@ defmodule Financials do
     Float.round(days/inventory_turnover, @two_decimal_precision)
   end
 
+  def average_payment_period(average_accounts_payable, total_credit_purchases, days) do
+    credit_days = Float.round(total_credit_purchases/days, @two_decimal_precision)
+    Float.round(average_accounts_payable/credit_days, @two_decimal_precision)
+  end
+
+  ###-------------------------------------------------
+
+  def break_even_analysis(fixed_costs, sales_price_per_unit, variable_cost_per_unit) do
+    Float.round(fixed_costs/(sales_price_per_unit - variable_cost_per_unit), @two_decimal_precision)
+  end
+
   ###-------------------------------------------------
 
   def eps_basic(earnings, shares_outstanding) do
