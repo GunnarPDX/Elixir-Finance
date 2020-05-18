@@ -6,6 +6,8 @@ defmodule Financials do
     total_revenues - total_expenses
   end
 
+  ###-------------------------------------------------
+
   def earnings(net_income, preferred_dividends) do
     net_income - preferred_dividends
   end
@@ -34,6 +36,8 @@ defmodule Financials do
     beginning_inventory + purchases - ending_inventory
   end
 
+  ###-------------------------------------------------
+
   # earnings before interest and taxes
   def ebit(revenue, cogs, operating_expenses) do
     revenue - cogs - operating_expenses
@@ -47,6 +51,12 @@ defmodule Financials do
   # earnings before interest, taxes, depreciation, and amortization
   def ebitda(net_income, interest_expense, taxes, depreciation, amortization) do
     net_income + interest_expense + taxes + depreciation + amortization
+  end
+
+  ###-------------------------------------------------
+
+  def accounts_receivable_turnover_ratio(net_credit_sales, average_accounts_receivable) do
+    Float.round(net_credit_sales/average_accounts_receivable, @two_decimal_precision)
   end
 
   ###-------------------------------------------------
