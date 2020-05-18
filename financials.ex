@@ -16,6 +16,8 @@ defmodule Financials do
     beginning_period_retained_earnings + net_income - cash_dividends - stock_dividends
   end
 
+  # TODO: change_in_working_capital
+
   # operating cash flow
   def ocf(operating_income, depreciation, taxes, change_in_working_capital) do
     operating_income + depreciation - taxes + change_in_working_capital
@@ -43,10 +45,14 @@ defmodule Financials do
     revenue - cogs - operating_expenses
   end
 
+  # TODO: operating_expenses
+
   # earnings before interest, taxes, and amortization
   def ebita(revenue, cogs, operating_expenses, amortization) do
     revenue - cogs - (operating_expenses + amortization)
   end
+
+  # TODO: amortization ?
 
   # earnings before interest, taxes, depreciation, and amortization
   def ebitda(net_income, interest_expense, taxes, depreciation, amortization) do
@@ -55,8 +61,18 @@ defmodule Financials do
 
   ###-------------------------------------------------
 
-  def accounts_receivable_turnover_ratio(net_credit_sales, average_accounts_receivable) do
+  # TODO: net_credit_sales
+  # TODO: average_accounts_receivable
+
+  def receivable_turnover_ratio(net_credit_sales, average_accounts_receivable) do
     Float.round(net_credit_sales/average_accounts_receivable, @two_decimal_precision)
+  end
+
+  # TODO: accumulated_depreciation
+  # TODO: total_fixed_assets
+
+  def accumulated_depreciation_to_fixed_assets(accumulated_depreciation, total_fixed_assets) do
+    Float.round(accumulated_depreciation/total_fixed_assets, @two_decimal_precision)
   end
 
   ###-------------------------------------------------
