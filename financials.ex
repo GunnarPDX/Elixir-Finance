@@ -85,6 +85,12 @@ defmodule Financials do
 
   ###-------------------------------------------------
 
+  def average_inventory_period(days, inventory_turnover) do
+    Float.round(days/inventory_turnover, @two_decimal_precision)
+  end
+
+  ###-------------------------------------------------
+
   def eps_basic(earnings, shares_outstanding) do
     Float.round(earnings/shares_outstanding, @two_decimal_precision)
   end
