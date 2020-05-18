@@ -137,6 +137,28 @@ defmodule Financials do
 
   ###-------------------------------------------------
 
+  def contribution_margin(net_sales, variable_costs) do
+    net_sales - variable_costs
+  end
+
+  ###-------------------------------------------------
+
+  def current_ratio(current_assets, current_liabilities) do
+    current_assets/current_liabilities
+  end
+
+  # days payable outstanding
+  def dpo(accounts_payable, cost_of_sales, days) do
+    cost_of_sales_per_day = Float.round(cost_of_sales/days, @two_decimal_precision)
+    Float.round(accounts_payable/cost_of_sales_per_day, @two_decimal_precision)
+  end
+
+  def days_sales_in_inventory(ending_inventory, cogs) do
+    Float.round(ending_inventory/cogs, @two_decimal_precision) * 365
+  end
+
+  ###-------------------------------------------------
+
   def eps_basic(earnings, shares_outstanding) do
     Float.round(earnings/shares_outstanding, @two_decimal_precision)
   end
