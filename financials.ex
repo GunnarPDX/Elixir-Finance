@@ -163,6 +163,29 @@ defmodule Financials do
 
   ###-------------------------------------------------
 
+  def debt_ratio(total_liabilities, total_assets) do
+    Float.round(total_liabilities/total_assets, @two_decimal_precision)
+  end
+
+  # debt service coverage ratio
+  def dscr(operating_income, total_debt_service_costs) do
+    Float.round(operating_income/total_debt_service_costs, @two_decimal_precision)
+  end
+
+  def debt_to_asset(total_debt, total_assets) do
+    Float.round(total_debt/total_assets, @two_decimal_precision)
+  end
+
+  def debt_to_capital(total_debt, shareholders_equity) do
+    Float.round(total_debt/(total_debt + shareholders_equity), @two_decimal_precision)
+  end
+
+  def debt_to_equity(total_liabilities, total_equity) do
+    Float.round(total_liabilities/total_equity, @two_decimal_precision)
+  end
+
+  ###-------------------------------------------------
+
   def eps_basic(earnings, shares_outstanding) do
     Float.round(earnings/shares_outstanding, @two_decimal_precision)
   end
