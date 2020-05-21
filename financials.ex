@@ -184,6 +184,18 @@ defmodule Financials do
     Float.round(total_liabilities/total_equity, @two_decimal_precision)
   end
 
+  # debt to income ratio
+  def dti(total_monthly_debt_payments, gross_monthly_income) do
+    Float.round(total_monthly_debt_payments/gross_monthly_income, @two_decimal_precision)
+  end
+
+  ###-------------------------------------------------
+
+  # defensive interval ratio
+  def dir(defensive_assets, daily_operational_expenses) do
+    Float.round(defensive_assets/daily_operational_expenses, @two_decimal_precision)
+  end
+
   ###-------------------------------------------------
 
   def eps_basic(earnings, shares_outstanding) do
