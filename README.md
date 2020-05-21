@@ -1,6 +1,8 @@
 
 # Elixir Finance Library
 
+This is a work in progress
+
 ## Functions
 
 #### Net Income

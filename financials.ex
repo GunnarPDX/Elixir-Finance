@@ -236,6 +236,13 @@ defmodule Financials do
 
   ###-------------------------------------------------
 
+  def dividend_payout(net_dividends, net_income) do
+    Float.round(net_dividends/net_income, @two_decimal_precision)
+  end
+
+  def dividend_yield(cash_dividends_per_share, market_value_per_share) do
+    Float.round(cash_dividends_per_share/market_value_per_share, @two_decimal_precision)
+  end
 
 
 end
