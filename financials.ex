@@ -157,6 +157,10 @@ defmodule Financials do
     Float.round(ending_inventory/cogs, @two_decimal_precision) * 365
   end
 
+  def days_sales_outstanding(accounts_receivable, net_credit_sales) do
+    Float.round(accounts_receivable/net_credit_sales, @two_decimal_precision) * 365
+  end
+
   ###-------------------------------------------------
 
   def eps_basic(earnings, shares_outstanding) do
