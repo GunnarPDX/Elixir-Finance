@@ -244,5 +244,28 @@ defmodule Financials do
     Float.round(cash_dividends_per_share/market_value_per_share, @two_decimal_precision)
   end
 
+  ###-------------------------------------------------
+
+  def du_pont_analysis(profit_margin, total_asset_turnover, financial_leverage) do
+    profit_margin * total_asset_turnover * financial_leverage
+  end
+
+  ###-------------------------------------------------
+
+  # enterprise value
+  def ev(market_capitalization, debt, current_cash) do
+    market_capitalization + debt - current_cash
+  end
+
+  def equity_multiplier(total_assets, total_stockholders_equity) do
+    Float.round(total_assets/total_stockholders_equity, @two_decimal_precision)
+  end
+
+  def equity_ratio(total_equity, total_assets) do
+    Float.round(total_equity/total_assets, @two_decimal_precision)
+  end
+
+
+
 
 end
