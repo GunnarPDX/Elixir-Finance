@@ -395,54 +395,93 @@ defmodule Financials do
     Float.round(net_sales/(fixed_assets - accumulated_depreciation), @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def fixed_charge_coverage_ratio(ebit, fixed_charges_before_taxes, interest) do
     Float.round((ebit + fixed_charges_before_taxes)/(fixed_charges_before_taxes + interest), @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   # free cash flow
   def fcf(operating_cash_flow, capital_expenditures) do
     operating_cash_flow - capital_expenditures
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def goodwill_to_assets(goodwill, assets) do
     Float.round(goodwill/assets, @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def gross_margin_ratio(gross_margin, net_sales) do
     Float.round(gross_margin/net_sales, @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def gross_profit(total_sales, cogs) do
     total_sales - cogs
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def interest_coverage_ratio(ebit, interest_expense) do
     Float.round(ebit/interest_expense, @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   # TODO: add XIRR wrapper
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def inventory_turnover_ratio(cogs, average_inventory) do
     Float.round(cogs/average_inventory, @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   # loan to value ratio
   def ltv(mortgage_amount, appraised_value_of_property) do
     Float.round(mortgage_amount/appraised_value_of_property, @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def long_term_debt_to_total_asset_ratio(long_term_debt, total_assets) do
     Float.round(long_term_debt/total_assets, @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def margin_of_safety_ratio(actual_sales, break_even_point) do
     actual_sales - break_even_point
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def margin_of_safety_ratio(actual_sales, break_even_point) do
     Float.round((actual_sales - break_even_point)/actual_sales, @two_decimal_precision)
   end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
   def margin_of_revenue(change_in_total_revenues, change_in_quantity_sold) do
     Float.round(change_in_total_revenues/change_in_quantity_sold, @two_decimal_precision)
   end
