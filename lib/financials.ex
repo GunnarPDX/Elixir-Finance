@@ -402,5 +402,21 @@ defmodule Financials do
     Float.round(goodwill/assets, @two_decimal_precision)
   end
 
+  def gross_margin_ratio(gross_margin, net_sales) do
+    Float.round(gross_margin/net_sales, @two_decimal_precision)
+  end
+
+  def gross_profit(total_sales, cogs) do
+    total_sales - cogs
+  end
+
+  def interest_coverage_ratio(ebit, interest_expense) do
+    Float.round(ebit/interest_expense, @two_decimal_precision)
+  end
+
+  # TODO: add XIRR
+
+
+
 
 end
