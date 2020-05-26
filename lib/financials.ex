@@ -1,6 +1,12 @@
 defmodule Financials do
 
   @two_decimal_precision 2
+  @three_decimal_precision 3
+  @four_decimal_precision 4
+  @five_decimal_precision 5
+  @six_decimal_precision 6
+
+  @cash_decimal_precision 2
 
 
 
@@ -414,7 +420,15 @@ defmodule Financials do
     Float.round(ebit/interest_expense, @two_decimal_precision)
   end
 
-  # TODO: add XIRR
+  # TODO: add XIRR wrapper
+
+  def inventory_turnover_ratio(cogs, average_inventory) do
+    Float.round(cogs/average_inventory, @two_decimal_precision)
+  end
+
+
+
+
 
 
 
