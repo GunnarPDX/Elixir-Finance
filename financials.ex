@@ -374,7 +374,33 @@ defmodule Financials do
     Float.round(total_equity/total_assets, @two_decimal_precision)
   end
 
+  # TODO: add below to readme
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
+  def expense_ratio(operating_expenses, average_value_of_fund_assets) do
+    Float.round(operating_expenses/average_value_of_fund_assets, @two_decimal_precision)
+  end
 
+  ##--------------------------------------------------------------
+  ##
+  ##--------------------------------------------------------------
+  def fixed_asset_turnover_ratio(net_sales, fixed_assets, accumulated_depreciation) do
+    Float.round(net_sales/(fixed_assets - accumulated_depreciation), @two_decimal_precision)
+  end
+
+  def fixed_charge_coverage_ratio(ebit, fixed_charges_before_taxes, interest) do
+    Float.round((ebit + fixed_charges_before_taxes)/(fixed_charges_before_taxes + interest), @two_decimal_precision)
+  end
+
+  # free cash flow
+  def fcf(operating_cash_flow, capital_expenditures) do
+    operating_cash_flow - capital_expenditures
+  end
+
+  def goodwill_to_assets(goodwill, assets) do
+    Float.round(goodwill/assets, @two_decimal_precision)
+  end
 
 
 end
