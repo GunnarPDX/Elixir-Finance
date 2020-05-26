@@ -131,6 +131,24 @@ This is a work in progress
 #### Price to Earnings to Growth Ratio
 * `peg_ratio(price_to_earnings, earnings_growth)`
 
+#### Dividend Payout Ratio
+* `dividend_payout(net_dividends, net_income)`
+
+#### Dividend Yield
+* `dividend_yield(cash_dividends_per_share, market_value_per_share)`
+
+#### DuPont Analysis
+* `du_pont_analysis(profit_margin, total_asset_turnover, financial_leverage)`
+
+#### Enterprise Value
+* `ev(market_capitalization, debt, current_cash)`
+
+#### Equity Multiplier
+* `equity_multiplier(total_assets, total_stockholders_equity)`
+
+#### Equity Ratio
+* `equity_ratio(total_equity, total_assets)`
+
 #### 
 * 
 
