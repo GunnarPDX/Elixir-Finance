@@ -426,6 +426,28 @@ defmodule Financials do
     Float.round(cogs/average_inventory, @two_decimal_precision)
   end
 
+  # loan to value ratio
+  def ltv(mortgage_amount, appraised_value_of_property) do
+    Float.round(mortgage_amount/appraised_value_of_property, @two_decimal_precision)
+  end
+
+  def long_term_debt_to_total_asset_ratio(long_term_debt, total_assets) do
+    Float.round(long_term_debt/total_assets, @two_decimal_precision)
+  end
+
+  def margin_of_safety_ratio(actual_sales, break_even_point) do
+    actual_sales - break_even_point
+  end
+
+  def margin_of_safety_ratio(actual_sales, break_even_point) do
+    Float.round((actual_sales - break_even_point)/actual_sales, @two_decimal_precision)
+  end
+
+  def margin_of_revenue(change_in_total_revenues, change_in_quantity_sold) do
+    Float.round(change_in_total_revenues/change_in_quantity_sold, @two_decimal_precision)
+  end
+
+
 
 
 
