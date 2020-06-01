@@ -264,7 +264,7 @@ defmodule Financials do
   ## @return float
   ##--------------------------------------------------------------
   def cagr(beginning_investment_value, ending_investment_value, years) do
-    value_ratio = Float.round(beginning_investment_value/ending_investment_value, @two_decimal_precision)
+    value_ratio = Float.round(ending_investment_value/beginning_investment_value, @two_decimal_precision)
     time_ratio = Float.round(1/years, @two_decimal_precision)
     :math.pow(value_ratio,time_ratio) - 1
   end
