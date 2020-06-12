@@ -1,5 +1,5 @@
 
-# Elixir Finance Library
+# Elixir Finance Library 🏦
 
 ***This library is currently incomplete!***
 
