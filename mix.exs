@@ -18,9 +18,6 @@ defmodule Finance.Mixfile do
   defp description do
     """
     A finance library for elixir.
-
-    Credits:
-    XIRR by Shubham Gupta --> https://github.com/scripbox/ex-elixir
     """
   end
 
@@ -35,11 +32,7 @@ defmodule Finance.Mixfile do
 
   defp deps do
     [
-      {:timex, "~> 3.1"},
-      {:ex_doc, "~> 0.12", only: :dev},
-      {:benchee, "~> 0.11", only: :dev},
-      {:benchee_html, "~> 0.4", only: :dev},
-      {:excoveralls, "~> 0.8", only: :test}
+      {:decimal, "~> 1.0"}
     ]
   end
 
