@@ -14,21 +14,29 @@ defmodule Financials do
   ## Net Income Calculation
   ## @param float -- total_revenues
   ## @param float -- total_expenses
-  ## @return float
+  ## @return tuple - {atom, float}
   ##--------------------------------------------------------------
-  def net_income(total_revenues, total_expenses) do
-    total_revenues - total_expenses
+  def net_income(total_revenues, total_expenses)
+    when is_number(total_expenses)
+    and is_number(total_revenues)
+    do
+      {:ok, (total_revenues - total_expenses)}
   end
+  def net_income(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Net Earnings Calculation
   ## @param float -- net_income
   ## @param float -- preferred_dividends
-  ## @return float
+  ## @return tuple - {atom, float}
   ##--------------------------------------------------------------
-  def earnings(net_income, preferred_dividends) do
-    net_income - preferred_dividends
+  def earnings(net_income, preferred_dividends)
+    when is_number(net_income)
+    and is_number(preferred_dividends)
+    do
+      {:ok, (net_income - preferred_dividends)}
   end
+  def earnings(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Retained Earnings Calculation
@@ -36,11 +44,17 @@ defmodule Financials do
   ## @param float -- net_income
   ## @param float -- cash_dividends
   ## @param float -- stock_dividends
-  ## @return float
+  ## @return tuple - {atom, float}
   ##--------------------------------------------------------------
-  def retained_earnings(beginning_period_retained_earnings, net_income, cash_dividends, stock_dividends) do
-    beginning_period_retained_earnings + net_income - cash_dividends - stock_dividends
+  def retained_earnings(beginning_period_retained_earnings, net_income, cash_dividends, stock_dividends)
+    when is_number(beginning_period_retained_earnings)
+    and is_number(net_income)
+    and is_number(cash_dividends)
+    and is_number(stock_dividends)
+    do
+      {:ok, (beginning_period_retained_earnings + net_income - cash_dividends - stock_dividends)}
   end
+  def retained_earnings(_, _, _, _) do {:error, "Arguments must be numerical"} end
 
   # TODO: change_in_working_capital
 
@@ -50,31 +64,47 @@ defmodule Financials do
   ## @param float -- depreciation
   ## @param float -- taxes
   ## @param float -- change_in_working_capital
-  ## @return float
+  ## @return tuple - {atom, float}
   ##--------------------------------------------------------------
-  def ocf(operating_income, depreciation, taxes, change_in_working_capital) do
-    operating_income + depreciation - taxes + change_in_working_capital
+  def ocf(operating_income, depreciation, taxes, change_in_working_capital)
+    when is_number(operating_income)
+    and is_number(depreciation)
+    and is_number(taxes)
+    and is_number(change_in_working_capital)
+    do
+      {:ok, (operating_income + depreciation - taxes + change_in_working_capital)}
   end
+  def ocf(_, _, _, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Return on Revenue Calculation
   ## @param float -- net_income
   ## @param float -- sales_revenue
-  ## @return float
+  ## @return tuple - {atom, float}
   ##--------------------------------------------------------------
-  def ror(net_income, sales_revenue) do
-    net_income/sales_revenue
+  def ror(_, 0) do {:error, "Sales revenue cannot be zero (divide by zero error)"} end
+  def ror(net_income, sales_revenue)
+    when is_number(net_income)
+    and is_number(sales_revenue)
+    do
+      {:ok, (net_income/sales_revenue)}
   end
+  def ror(_, _) do {:error, "Arguments must be numeric"} end
 
   ##--------------------------------------------------------------
   ## Return on Sales Calculation
   ## @param float -- operating_profit
   ## @param float -- net_sales
-  ## @return float
+  ## @return tuple - {atom, float}
   ##--------------------------------------------------------------
-  def ros(operating_profit, net_sales) do
-    operating_profit/net_sales
+  def ros(_, 0) do {:error, "Net sales cannot be zero (divide by zero error"} end
+  def ros(operating_profit, net_sales)
+    when is_number(operating_profit)
+    and is_number(net_sales)
+    do
+      {:ok, (operating_profit/net_sales)}
   end
+  def ros(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Cost of Goods Sold Calculation
@@ -83,9 +113,14 @@ defmodule Financials do
   ## @param float -- ending_inventory
   ## @return float
   ##--------------------------------------------------------------
-  def cogs(beginning_inventory, purchases, ending_inventory) do
-    beginning_inventory + purchases - ending_inventory
+  def cogs(beginning_inventory, purchases, ending_inventory)
+    when is_number(beginning_inventory)
+    and is_number(purchases)
+    and is_number(ending_inventory)
+    do
+      {:ok, (beginning_inventory + purchases - ending_inventory)}
   end
+  def cogs(_, _, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## EBIT -- Earnings Before Interest and Taxes Calculation
@@ -94,9 +129,14 @@ defmodule Financials do
   ## @param float -- operating_expenses
   ## @return float
   ##--------------------------------------------------------------
-  def ebit(revenue, cogs, operating_expenses) do
-    revenue - cogs - operating_expenses
+  def ebit(revenue, cogs, operating_expenses)
+    when is_number(revenue)
+    and is_number(cogs)
+    and is_number(operating_expenses)
+    do
+      {:ok, (revenue - cogs - operating_expenses)}
   end
+  def ebit(_, _, _) do {:error, "Arguments must be numbers"} end
 
   # TODO: operating_expenses
 
