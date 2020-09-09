@@ -1,7 +1,9 @@
 
-# Elixir Finance Library
+# Elixir Finance Library 🏦
 
-This is a work in progress
+***This library is currently incomplete!***
+
+This is a finance library for elixir containing functions for common financial calculations that can be used as building blocks for complex financial modeling.
 
 ## Functions
 
