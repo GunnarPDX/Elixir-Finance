@@ -148,9 +148,15 @@ defmodule Financials do
   ## @param float -- amortization
   ## @return float
   ##--------------------------------------------------------------
-  def ebita(revenue, cogs, operating_expenses, amortization) do
-    revenue - cogs - (operating_expenses + amortization)
+  def ebita(revenue, cogs, operating_expenses, amortization)
+    when is_number(revenue)
+    and is_number(cogs)
+    and is_number(operating_expenses)
+    and is_number(amortization)
+    do
+      {:ok, (revenue - cogs - (operating_expenses + amortization))}
   end
+  def ebita(_, _, _, _) do {:error, "Arguments must be numerical"} end
 
   # TODO: amortization ?
 
@@ -163,9 +169,16 @@ defmodule Financials do
   ## @param float -- amortization
   ## @return float
   ##--------------------------------------------------------------
-  def ebitda(net_income, interest_expense, taxes, depreciation, amortization) do
-    net_income + interest_expense + taxes + depreciation + amortization
+  def ebitda(net_income, interest_expense, taxes, depreciation, amortization)
+    when is_number(net_income)
+    and is_number(interest_expense)
+    and is_number(taxes)
+    and is_number(depreciation)
+    and is_number(amortization)
+    do
+      {:ok, (net_income + interest_expense + taxes + depreciation + amortization)}
   end
+  def ebitda(_, _, _, _, _) do {:error, "Arguments must be numerical"} end
 
   # TODO: net_credit_sales
   # TODO: average_accounts_receivable
@@ -176,9 +189,14 @@ defmodule Financials do
   ## @param float -- average_accounts_receivable
   ## @return float
   ##--------------------------------------------------------------
-  def receivable_turnover_ratio(net_credit_sales, average_accounts_receivable) do
-    Float.round(net_credit_sales/average_accounts_receivable, @two_decimal_precision)
+  def receivable_turnover_ratio(_, 0) do {:error, "Avg accounts receivable can't be zero (Divide by zero error)"} end
+  def receivable_turnover_ratio(net_credit_sales, average_accounts_receivable)
+    when is_number(net_credit_sales)
+    and is_number(average_accounts_receivable)
+    do
+      {:ok, (Float.round(net_credit_sales/average_accounts_receivable, @two_decimal_precision))}
   end
+  def receivable_turnover_ratio(_, _) do {:error, "Arguments must be numerical"} end
 
   # TODO: accumulated_depreciation
   # TODO: total_fixed_assets
@@ -189,9 +207,14 @@ defmodule Financials do
   ## @param float -- total_fixed_assets
   ## @return float
   ##--------------------------------------------------------------
-  def accumulated_depreciation_to_fixed_assets(accumulated_depreciation, total_fixed_assets) do
-    Float.round(accumulated_depreciation/total_fixed_assets, @two_decimal_precision)
+  def accumulated_depreciation_to_fixed_assets(_, 0) do {:error, "Total fixed assets can't be zero (Divide by zero error)"} end
+  def accumulated_depreciation_to_fixed_assets(accumulated_depreciation, total_fixed_assets)
+    when is_number(accumulated_depreciation)
+    and is_number(total_fixed_assets)
+    do
+      {:ok, (Float.round(accumulated_depreciation/total_fixed_assets, @two_decimal_precision))}
   end
+  def accumulated_depreciation_to_fixed_assets(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Asset Coverage Ratio Calculation
