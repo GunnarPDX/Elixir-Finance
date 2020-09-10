@@ -1,14 +1,14 @@
 defmodule Financials do
 
+  ##--------------------------------------------------------------
+  ## CONSTANTS FOR ROUNDING
+  ##--------------------------------------------------------------
+  @cash_decimal_precision 2
   @two_decimal_precision 2
   @three_decimal_precision 3
   @four_decimal_precision 4
   @five_decimal_precision 5
   @six_decimal_precision 6
-
-  @cash_decimal_precision 2
-
-
 
   ##--------------------------------------------------------------
   ## Net Income Calculation
@@ -225,9 +225,19 @@ defmodule Financials do
   ## @param float -- total_debt
   ## @return float
   ##--------------------------------------------------------------
-  def asset_coverage(total_assets, intangible_assets, current_liabilities, short_term_debt, total_debt) do
-    Float.round(((total_assets - intangible_assets) - (current_liabilities - short_term_debt))/total_debt, @two_decimal_precision)
+  def asset_coverage(_, _, _, _, 0) do {:error, "Total debt can't be zero (Divide by zero error)"} end
+  def asset_coverage(total_assets, intangible_assets, current_liabilities, short_term_debt, total_debt)
+    when is_number(total_assets)
+    and is_number(intangible_assets)
+    and is_number(current_liabilities)
+    and is_number(short_term_debt)
+    and is_number(total_debt)
+    do
+      assets = total_assets - intangible_assets
+      liabilities = current_liabilities - short_term_debt
+      {:ok, (Float.round((assets - liabilities)/total_debt, @two_decimal_precision))}
   end
+  def asset_coverage(_, _, _, _, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Asset Turnover Ratio Calculation
@@ -235,19 +245,29 @@ defmodule Financials do
   ## @param float -- average_total_sales
   ## @return float
   ##--------------------------------------------------------------
-  def asset_turnover(net_sales, average_total_sales) do
-    Float.round(net_sales/average_total_sales, @two_decimal_precision)
+  def asset_turnover(_, 0) do {:error, "Average total sales can't be zero (Divide by zero error)"} end
+  def asset_turnover(net_sales, average_total_sales)
+    when is_number(net_sales)
+    and is_number(average_total_sales)
+    do
+      {:ok, (Float.round(net_sales/average_total_sales, @two_decimal_precision))}
   end
+  def asset_turnover(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Average Inventory Period Calculation
-  ## @param int -- days
+  ## @param int/float -- days
   ## @param float -- inventory_turnover
   ## @return float
   ##--------------------------------------------------------------
-  def average_inventory_period(days, inventory_turnover) do
-    Float.round(days/inventory_turnover, @two_decimal_precision)
+  def average_inventory_period(_, 0) do {:error, "Inventory turnover can't be zero (Divide by zero error)"} end
+  def average_inventory_period(days, inventory_turnover)
+    when is_number(days)
+    and is_number(inventory_turnover)
+    do
+      {:ok, (Float.round(days/inventory_turnover, @two_decimal_precision))}
   end
+  def average_inventory_period(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Average Payment Period Calculation
@@ -256,10 +276,18 @@ defmodule Financials do
   ## @param int -- days
   ## @return float
   ##--------------------------------------------------------------
-  def average_payment_period(average_accounts_payable, total_credit_purchases, days) do
-    credit_days = Float.round(total_credit_purchases/days, @two_decimal_precision)
-    Float.round(average_accounts_payable/credit_days, @two_decimal_precision)
+  def average_payment_period(_, 0, 0) do {:error, "Days and total credit purchases can't be zero (Divide by zero error)"} end
+  def average_payment_period(_, _, 0) do {:error, "Days can't be zero (Divide by zero error)"} end
+  def average_payment_period(_, 0, _) do {:error, "Total credit purchases can't be zero (Divide by zero error)"} end
+  def average_payment_period(average_accounts_payable, total_credit_purchases, days)
+    when is_number(average_accounts_payable)
+    and is_number(total_credit_purchases)
+    and is_number(days)
+    do
+      credit_days = Float.round(total_credit_purchases/days, @two_decimal_precision)
+      {:ok, (Float.round(average_accounts_payable/credit_days, @two_decimal_precision))}
   end
+  def average_payment_period(_, _, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Break Even Analysis Calculation
@@ -268,9 +296,18 @@ defmodule Financials do
   ## @param float -- variable_cost_per_unit
   ## @return float
   ##--------------------------------------------------------------
-  def break_even_analysis(fixed_costs, sales_price_per_unit, variable_cost_per_unit) do
-    Float.round(fixed_costs/(sales_price_per_unit - variable_cost_per_unit), @two_decimal_precision)
+  def break_even_analysis(fixed_costs, sales_price_per_unit, variable_cost_per_unit)
+    when is_number(fixed_costs)
+    and is_number(sales_price_per_unit)
+    and is_number(variable_cost_per_unit)
+    do
+      price = (sales_price_per_unit - variable_cost_per_unit)
+      case price do
+        0 -> {:error, "sales_price_per_unit - variable_cost_per_unit can't equal zero (Divide by zero error)"}
+        _ -> {:ok, (Float.round(fixed_costs/price, @two_decimal_precision))}
+      end
   end
+  def break_even_analysis(_, _, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Capitalization Ratio Calculation
@@ -750,13 +787,5 @@ defmodule Financials do
   def margin_of_revenue(change_in_total_revenues, change_in_quantity_sold) do
     Float.round(change_in_total_revenues/change_in_quantity_sold, @two_decimal_precision)
   end
-
-
-
-
-
-
-
-
 
 end
