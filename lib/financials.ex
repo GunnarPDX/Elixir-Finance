@@ -315,9 +315,14 @@ defmodule Financials do
   ## @param float -- shareholders_equity
   ## @return float
   ##--------------------------------------------------------------
-  def capitalization_ratio(total_debt, shareholders_equity) do
-    Float.round(total_debt/(total_debt + shareholders_equity), @two_decimal_precision)
+  def capitalization_ratio(_, 0) do {:error, "Shareholders_equity cannot be zero (Divide by zero error)"} end
+  def capitalization_ratio(total_debt, shareholders_equity)
+    when is_number(total_debt)
+    and is_number(shareholders_equity)
+    do
+      Float.round(total_debt/(total_debt + shareholders_equity), @two_decimal_precision)
   end
+  def capitalization_ratio(_, _) do {:error, "Arguments must be numerical"} end
 
   # TODO: days_inventory_outstanding
   # TODO: days_sales_outstanding
@@ -330,9 +335,14 @@ defmodule Financials do
   ## @param float -- days_payables_outstanding
   ## @return float
   ##--------------------------------------------------------------
-  def cash_conversion_cycle(days_inventory_outstanding, days_sales_outstanding, days_payables_outstanding) do
-    days_inventory_outstanding + days_sales_outstanding + days_payables_outstanding
+  def cash_conversion_cycle(days_inventory_outstanding, days_sales_outstanding, days_payables_outstanding)
+    when is_number(days_inventory_outstanding)
+    and is_number(days_sales_outstanding)
+    and is_number(days_payables_outstanding)
+    do
+      days_inventory_outstanding + days_sales_outstanding + days_payables_outstanding
   end
+  def cash_conversion_cycle(_, _, _) do {:error, "Arguments must be numerical"} end
 
 
   ##--------------------------------------------------------------
@@ -341,9 +351,14 @@ defmodule Financials do
   ## @param float -- total_debt
   ## @return float
   ##--------------------------------------------------------------
-  def cash_flow_coverage(operating_cash_flows, total_debt) do
-    Float.round(operating_cash_flows/total_debt, @two_decimal_precision)
+  def cash_flow_coverage(_, 0) do {:error,  "total_debt cannot be zero (Divide by zero error)"} end
+  def cash_flow_coverage(operating_cash_flows, total_debt)
+    when is_number(operating_cash_flows)
+    and is_number(total_debt)
+    do
+      Float.round(operating_cash_flows/total_debt, @two_decimal_precision)
   end
+  def cash_flow_coverage(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Cash Ratio Calculation
@@ -352,9 +367,15 @@ defmodule Financials do
   ## @param float -- total_current_liabilities
   ## @return float
   ##--------------------------------------------------------------
-  def cash_ratio(cash, cash_equivalents, total_current_liabilities) do
-    Float.round((cash + cash_equivalents)/total_current_liabilities, @two_decimal_precision)
+  def cash_ratio(_, _, 0) do {:error, "cash_equivalents cannot be zero (Divide by zero error)"} end
+  def cash_ratio(cash, cash_equivalents, total_current_liabilities)
+    when is_number(cash)
+    and is_number(cash_equivalents)
+    and is_number(total_current_liabilities)
+    do
+      Float.round((cash + cash_equivalents)/total_current_liabilities, @two_decimal_precision)
   end
+  def cash_ratio(_, _, _) do {:error, "arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Compound Annual Growth Rate Calculation
@@ -363,11 +384,19 @@ defmodule Financials do
   ## @param int -- years
   ## @return float
   ##--------------------------------------------------------------
-  def cagr(beginning_investment_value, ending_investment_value, years) do
-    value_ratio = Float.round(ending_investment_value/beginning_investment_value, @two_decimal_precision)
-    time_ratio = Float.round(1/years, @two_decimal_precision)
-    :math.pow(value_ratio,time_ratio) - 1
+  def cagr(0, _, 0) do {:error, "beginning_investment_amount and years cannot be zero (Divide by zero error)"} end
+  def cagr(0, _, _) do {:error, "beginning_investment_amount cannot be zero (Divide by zero error)"} end
+  def cagr(_, _, 0) do {:error, "years cannot be zero (Divide by zero error)"} end
+  def cagr(beginning_investment_value, ending_investment_value, years)
+    when is_number(beginning_investment_value)
+    and is_number(ending_investment_value)
+    and is_number(years)
+    do
+      value_ratio = Float.round(ending_investment_value/beginning_investment_value, @two_decimal_precision)
+      time_ratio = Float.round(1/years, @two_decimal_precision)
+      :math.pow(value_ratio,time_ratio) - 1
   end
+  def cagr(_, _, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Contribution Margin Calculation
@@ -375,9 +404,13 @@ defmodule Financials do
   ## @param float -- variable_costs
   ## @return float
   ##--------------------------------------------------------------
-  def contribution_margin(net_sales, variable_costs) do
-    net_sales - variable_costs
+  def contribution_margin(net_sales, variable_costs)
+    when is_number(net_sales)
+    and is_number(variable_costs)
+    do
+      net_sales - variable_costs
   end
+  def contribution_margin(net_sales, variable_costs) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Current Ratio Calculation
@@ -385,9 +418,14 @@ defmodule Financials do
   ## @param float -- current_liabilities
   ## @return float
   ##--------------------------------------------------------------
-  def current_ratio(current_assets, current_liabilities) do
-    current_assets/current_liabilities
+  def current_ratio(_, 0) do {:error, "current_liabilities cant be zero (Divide by zero error)"} end
+  def current_ratio(current_assets, current_liabilities)
+    when is_number(current_assets)
+    and is_number(current_liabilities)
+    do
+      Float.round(current_assets/current_liabilities, @two_decimal_precision)
   end
+  def current_ratio(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Days Payable Outstanding Calculation
