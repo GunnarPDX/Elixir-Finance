@@ -315,7 +315,7 @@ defmodule Financials do
   ## @param float -- shareholders_equity
   ## @return float
   ##--------------------------------------------------------------
-  def capitalization_ratio(_, 0) do {:error, "Shareholders_equity cannot be zero (Divide by zero error)"} end
+  def capitalization_ratio(_, 0) do {:error, "Shareholders_equity can't be zero (Divide by zero error)"} end
   def capitalization_ratio(total_debt, shareholders_equity)
     when is_number(total_debt)
     and is_number(shareholders_equity)
@@ -351,7 +351,7 @@ defmodule Financials do
   ## @param float -- total_debt
   ## @return float
   ##--------------------------------------------------------------
-  def cash_flow_coverage(_, 0) do {:error,  "total_debt cannot be zero (Divide by zero error)"} end
+  def cash_flow_coverage(_, 0) do {:error,  "total_debt can't be zero (Divide by zero error)"} end
   def cash_flow_coverage(operating_cash_flows, total_debt)
     when is_number(operating_cash_flows)
     and is_number(total_debt)
@@ -367,7 +367,7 @@ defmodule Financials do
   ## @param float -- total_current_liabilities
   ## @return float
   ##--------------------------------------------------------------
-  def cash_ratio(_, _, 0) do {:error, "cash_equivalents cannot be zero (Divide by zero error)"} end
+  def cash_ratio(_, _, 0) do {:error, "cash_equivalents can't be zero (Divide by zero error)"} end
   def cash_ratio(cash, cash_equivalents, total_current_liabilities)
     when is_number(cash)
     and is_number(cash_equivalents)
@@ -384,9 +384,9 @@ defmodule Financials do
   ## @param int -- years
   ## @return float
   ##--------------------------------------------------------------
-  def cagr(0, _, 0) do {:error, "beginning_investment_amount and years cannot be zero (Divide by zero error)"} end
-  def cagr(0, _, _) do {:error, "beginning_investment_amount cannot be zero (Divide by zero error)"} end
-  def cagr(_, _, 0) do {:error, "years cannot be zero (Divide by zero error)"} end
+  def cagr(0, _, 0) do {:error, "beginning_investment_amount and years can't be zero (Divide by zero error)"} end
+  def cagr(0, _, _) do {:error, "beginning_investment_amount can't be zero (Divide by zero error)"} end
+  def cagr(_, _, 0) do {:error, "years can't be zero (Divide by zero error)"} end
   def cagr(beginning_investment_value, ending_investment_value, years)
     when is_number(beginning_investment_value)
     and is_number(ending_investment_value)
@@ -418,7 +418,7 @@ defmodule Financials do
   ## @param float -- current_liabilities
   ## @return float
   ##--------------------------------------------------------------
-  def current_ratio(_, 0) do {:error, "current_liabilities cant be zero (Divide by zero error)"} end
+  def current_ratio(_, 0) do {:error, "current_liabilities can't be zero (Divide by zero error)"} end
   def current_ratio(current_assets, current_liabilities)
     when is_number(current_assets)
     and is_number(current_liabilities)
@@ -434,9 +434,9 @@ defmodule Financials do
   ## @param int -- days
   ## @return float
   ##--------------------------------------------------------------
-  def dpo(_, 0, 0) do {:error, "cost_of_sales and days cannot be zero (Divide by zero error)"} end
-  def dpo(_, 0, _) do {:error, "cost_of_sales cannot be zero (Divide by zero error)"} end
-  def dpo(_, _, 0) do {:error, "days cannot be zero (Divide by zero error)"} end
+  def dpo(_, 0, 0) do {:error, "cost_of_sales and days can't be zero (Divide by zero error)"} end
+  def dpo(_, 0, _) do {:error, "cost_of_sales can't be zero (Divide by zero error)"} end
+  def dpo(_, _, 0) do {:error, "days can't be zero (Divide by zero error)"} end
   def dpo(accounts_payable, cost_of_sales, days)
     when is_number(accounts_payable)
     and is_number(cost_of_sales)
@@ -453,7 +453,7 @@ defmodule Financials do
   ## @param float -- cogs
   ## @return float
   ##--------------------------------------------------------------
-  def dsi(_, 0) do {:error, "cogs cannot be zero (Divide by zero error)"} end
+  def dsi(_, 0) do {:error, "cogs can't be zero (Divide by zero error)"} end
   def dsi(ending_inventory, cogs)
     when is_number(ending_inventory)
     and is_number(cogs)
@@ -468,7 +468,7 @@ defmodule Financials do
   ## @param float -- net_credit_sales
   ## @return float
   ##--------------------------------------------------------------
-  def dso(_, 0) do {:error, "net_credit_sales cannot be zero (Divide by zero error)"} end
+  def dso(_, 0) do {:error, "net_credit_sales can't be zero (Divide by zero error)"} end
   def dso(accounts_receivable, net_credit_sales)
     when is_number(accounts_receivable)
     and is_number(net_credit_sales)
@@ -484,9 +484,14 @@ defmodule Financials do
   ## @param float -- total_assets
   ## @return float
   ##--------------------------------------------------------------
-  def debt_ratio(total_liabilities, total_assets) do
-    Float.round(total_liabilities/total_assets, @two_decimal_precision)
+  def debt_ratio(_, 0) do {:error, "total_assets can't be zero (Divide by zero error)"} end
+  def debt_ratio(total_liabilities, total_assets)
+    when is_number(total_liabilities)
+    and is_number(total_assets)
+    do
+      Float.round(total_liabilities/total_assets, @two_decimal_precision)
   end
+  def debt_ratio(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Debt Service Coverage Ratio
@@ -494,9 +499,14 @@ defmodule Financials do
   ## @param float -- total_debt_service_costs
   ## @return float
   ##--------------------------------------------------------------
-  def dscr(operating_income, total_debt_service_costs) do
-    Float.round(operating_income/total_debt_service_costs, @two_decimal_precision)
+  def dscr(_, 0) do {:error, "total_debt_service_costs can't be zero (Divide by zero error)"} end
+  def dscr(operating_income, total_debt_service_costs)
+    when is_number(operating_income)
+    and is_number(total_debt_service_costs)
+    do
+      Float.round(operating_income/total_debt_service_costs, @two_decimal_precision)
   end
+  def dscr(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Debt to Asset Ratio Calculation
@@ -504,9 +514,14 @@ defmodule Financials do
   ## @param float -- total_assets
   ## @return float
   ##--------------------------------------------------------------
-  def debt_to_asset(total_debt, total_assets) do
-    Float.round(total_debt/total_assets, @two_decimal_precision)
+  def debt_to_asset(_, 0) do {:error, "total_assets can't be zero (Divide by zero error)"} end
+  def debt_to_asset(total_debt, total_assets)
+    when is_number(total_debt)
+    and is_number(total_assets)
+    do
+      Float.round(total_debt/total_assets, @two_decimal_precision)
   end
+  def debt_to_asset(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Debt ot Capital Ratio Calculation
@@ -514,9 +529,14 @@ defmodule Financials do
   ## @param float -- shareholders_equity
   ## @return float
   ##--------------------------------------------------------------
-  def debt_to_capital(total_debt, shareholders_equity) do
-    Float.round(total_debt/(total_debt + shareholders_equity), @two_decimal_precision)
+  def debt_to_capital(_, 0) do {:error, "shareholders_equity can't be zero (Divide by zero error)"} end
+  def debt_to_capital(total_debt, shareholders_equity)
+    when is_number(total_debt)
+    and is_number(shareholders_equity)
+    do
+      Float.round(total_debt/(total_debt + shareholders_equity), @two_decimal_precision)
   end
+  def debt_to_capital(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Debt to Equity Ratio Calculation
@@ -524,9 +544,14 @@ defmodule Financials do
   ## @param float -- total_equity
   ## @return float
   ##--------------------------------------------------------------
-  def debt_to_equity(total_liabilities, total_equity) do
-    Float.round(total_liabilities/total_equity, @two_decimal_precision)
+  def debt_to_equity(_, 0) do {:error, "total_equity can't be zero (Divide by zero error)"} end
+  def debt_to_equity(total_liabilities, total_equity)
+    when is_number(total_liabilities)
+    and is_number(total_equity)
+    do
+      Float.round(total_liabilities/total_equity, @two_decimal_precision)
   end
+  def debt_to_equity(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Debt to Income Ratio Calculation
@@ -534,9 +559,14 @@ defmodule Financials do
   ## @param float -- gross_monthly_income
   ## @return float
   ##--------------------------------------------------------------
-  def dti(total_monthly_debt_payments, gross_monthly_income) do
-    Float.round(total_monthly_debt_payments/gross_monthly_income, @two_decimal_precision)
+  def dti(_, 0) do {:error, "gross_monthly_income can't be zero (Divide by zero error)"} end
+  def dti(total_monthly_debt_payments, gross_monthly_income)
+    when is_number(total_monthly_debt_payments)
+    and is_number(gross_monthly_income)
+    do
+      Float.round(total_monthly_debt_payments/gross_monthly_income, @two_decimal_precision)
   end
+  def dti(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Defensive Interval Ratio Calculation
