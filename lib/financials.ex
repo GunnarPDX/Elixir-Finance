@@ -434,10 +434,18 @@ defmodule Financials do
   ## @param int -- days
   ## @return float
   ##--------------------------------------------------------------
-  def dpo(accounts_payable, cost_of_sales, days) do
-    cost_of_sales_per_day = Float.round(cost_of_sales/days, @two_decimal_precision)
-    Float.round(accounts_payable/cost_of_sales_per_day, @two_decimal_precision)
+  def dpo(_, 0, 0) do {:error, "cost_of_sales and days cannot be zero (Divide by zero error)"} end
+  def dpo(_, 0, _) do {:error, "cost_of_sales cannot be zero (Divide by zero error)"} end
+  def dpo(_, _, 0) do {:error, "days cannot be zero (Divide by zero error)"} end
+  def dpo(accounts_payable, cost_of_sales, days)
+    when is_number(accounts_payable)
+    and is_number(cost_of_sales)
+    and is_number(days)
+    do
+      cost_of_sales_per_day = Float.round(cost_of_sales/days, @two_decimal_precision)
+      Float.round(accounts_payable/cost_of_sales_per_day, @two_decimal_precision)
   end
+  def dpo(_, _, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Days Sales in Inventory Calculation
@@ -445,9 +453,14 @@ defmodule Financials do
   ## @param float -- cogs
   ## @return float
   ##--------------------------------------------------------------
-  def days_sales_in_inventory(ending_inventory, cogs) do
-    Float.round(ending_inventory/cogs, @two_decimal_precision) * 365
+  def dsi(_, 0) do {:error, "cogs cannot be zero (Divide by zero error)"} end
+  def dsi(ending_inventory, cogs)
+    when is_number(ending_inventory)
+    and is_number(cogs)
+    do
+      Float.round(ending_inventory/cogs, @two_decimal_precision) * 365
   end
+  def dsi(_, _) do {:error, "Arguments must be numerical"} end
 
   ##--------------------------------------------------------------
   ## Days Sales Outstanding Calculation
@@ -455,9 +468,15 @@ defmodule Financials do
   ## @param float -- net_credit_sales
   ## @return float
   ##--------------------------------------------------------------
-  def days_sales_outstanding(accounts_receivable, net_credit_sales) do
-    Float.round(accounts_receivable/net_credit_sales, @two_decimal_precision) * 365
+  def dso(_, 0) do {:error, "net_credit_sales cannot be zero (Divide by zero error)"} end
+  def dso(accounts_receivable, net_credit_sales)
+    when is_number(accounts_receivable)
+    and is_number(net_credit_sales)
+    do
+      Float.round(accounts_receivable/net_credit_sales, @two_decimal_precision) * 365
   end
+  def dso(_, _) do {:error, "Arguments must be numerical"} end
+
 
   ##--------------------------------------------------------------
   ## Debt Ratio Calculation
