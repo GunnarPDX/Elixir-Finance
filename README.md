@@ -1,6 +1,9 @@
 
 # Elixir Finance Library 🏦
 
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+[![Hex.pm Version](http://img.shields.io/hexpm/v/financials.svg?style=flat)](https://hex.pm/packages/financials)
+
 ***This library is currently incomplete!***
 
 A financial modeling library for elixir. Contains functions that can be used as building blocks for complex financial modeling.
@@ -13,7 +16,8 @@ The package can (soon) be installed by adding `financial` to your list of depend
 ```elixir
 def deps do
   [
-    {:financials, "~> 0.1"}
+    {:decimal, "~> 1.0"},
+    {:financials, "~> 0.0.0"}
   ]
 end
 ```
