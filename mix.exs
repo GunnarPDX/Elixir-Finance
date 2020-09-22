@@ -2,9 +2,9 @@ defmodule Finance.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :finance,
+    [app: :financials,
       version: "0.0.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.10.2",
       description: "A finance library for elixir.",
       package: package(),
       description: description(),
