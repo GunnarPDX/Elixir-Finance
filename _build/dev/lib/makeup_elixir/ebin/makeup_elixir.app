@@ -1,0 +1,10 @@
+{application,makeup_elixir,
+             [{applications,[kernel,stdlib,elixir,makeup]},
+              {description,"Elixir lexer for the Makeup syntax highlighter.\n"},
+              {modules,['Elixir.Makeup.Lexers.ElixirLexer',
+                        'Elixir.Makeup.Lexers.ElixirLexer.Application',
+                        'Elixir.Makeup.Lexers.ElixirLexer.Helper',
+                        'Elixir.Makeup.Lexers.ElixirLexer.Testing']},
+              {registered,[]},
+              {vsn,"0.14.1"},
+              {mod,{'Elixir.Makeup.Lexers.ElixirLexer.Application',[]}}]}.

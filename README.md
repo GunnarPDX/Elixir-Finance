@@ -16,7 +16,6 @@ The package can (soon) be installed by adding `financial` to your list of depend
 ```elixir
 def deps do
   [
-    {:decimal, "~> 1.0"},
     {:financials, "~> 0.0.0"}
   ]
 end

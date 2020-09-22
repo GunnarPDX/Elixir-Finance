@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.22.6">
+    <meta name="project" content="finance v0.0.0">
+    <title>Financials — finance v0.0.0</title>
+    <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
+      <link rel="canonical" href="https://hexdocs.pm/finance/Financials.html" />
+    <script src="dist/sidebar_items-42c6bcc474.js"></script>
+      <script src="docs_config.js"></script>
+    <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
+  </head>
+  <body data-type="modules">
+    <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" id="search-list" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="api-reference.html" class="sidebar-projectName">
+finance      </a>
+      <strong class="sidebar-projectVersion">
+        v0.0.0
+      </strong>
+    </div>
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+        Financials <small class="app-vsn">(finance v0.0.0)</small>
+      </h1>
+
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#accumulated_depreciation_to_fixed_assets/2">accumulated_depreciation_to_fixed_assets(accumulated_depreciation, total_fixed_assets)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#asset_coverage/5">asset_coverage(total_assets, intangible_assets, current_liabilities, short_term_debt, total_debt)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#asset_turnover/2">asset_turnover(net_sales, average_total_sales)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#average_inventory_period/2">average_inventory_period(days, inventory_turnover)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#average_payment_period/3">average_payment_period(average_accounts_payable, total_credit_purchases, days)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#break_even_analysis/3">break_even_analysis(fixed_costs, sales_price_per_unit, variable_cost_per_unit)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#cagr/3">cagr(beginning_investment_value, ending_investment_value, years)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#capitalization_ratio/2">capitalization_ratio(total_debt, shareholders_equity)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#cash_conversion_cycle/3">cash_conversion_cycle(days_inventory_outstanding, days_sales_outstanding, days_payables_outstanding)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#cash_flow_coverage/2">cash_flow_coverage(operating_cash_flows, total_debt)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#cash_ratio/3">cash_ratio(cash, cash_equivalents, total_current_liabilities)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#cogs/3">cogs(beginning_inventory, purchases, ending_inventory)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#contribution_margin/2">contribution_margin(net_sales, variable_costs)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#current_ratio/2">current_ratio(current_assets, current_liabilities)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#debt_ratio/2">debt_ratio(total_liabilities, total_assets)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#debt_to_asset/2">debt_to_asset(total_debt, total_assets)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#debt_to_capital/2">debt_to_capital(total_debt, shareholders_equity)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#debt_to_equity/2">debt_to_equity(total_liabilities, total_equity)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#dir/2">dir(defensive_assets, daily_operational_expenses)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#dividend_payout/2">dividend_payout(net_dividends, net_income)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#dividend_yield/2">dividend_yield(cash_dividends_per_share, market_value_per_share)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#dpo/3">dpo(accounts_payable, cost_of_sales, days)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#dscr/2">dscr(operating_income, total_debt_service_costs)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#dsi/2">dsi(ending_inventory, cogs)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#dso/2">dso(accounts_receivable, net_credit_sales)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#dti/2">dti(total_monthly_debt_payments, gross_monthly_income)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#du_pont_analysis/3">du_pont_analysis(profit_margin, total_asset_turnover, financial_leverage)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#earnings/2">earnings(net_income, preferred_dividends)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#ebit/3">ebit(revenue, cogs, operating_expenses)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#ebita/4">ebita(revenue, cogs, operating_expenses, amortization)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#ebitda/5">ebitda(net_income, interest_expense, taxes, depreciation, amortization)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#eps_basic/2">eps_basic(earnings, shares_outstanding)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#eps_book_value/3">eps_book_value(total_equity, preferred_equity, shares_outstanding)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#eps_cash/2">eps_cash(operating_cash_flow, shares_outstanding)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#eps_diluted/3">eps_diluted(earnings, shares_outstanding, diluted_shares)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#eps_pro_forma/5">eps_pro_forma(acquirers_net_income, targets_net_income, incremental_adjustments, shares_outstanding, diluted_shares)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#eps_retained/2">eps_retained(retained_earnings, shares_outstanding)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#equity_multiplier/2">equity_multiplier(total_assets, total_stockholders_equity)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#equity_ratio/2">equity_ratio(total_equity, total_assets)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#ev/3">ev(market_capitalization, debt, current_cash)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#expense_ratio/2">expense_ratio(operating_expenses, average_value_of_fund_assets)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fcf/2">fcf(operating_cash_flow, capital_expenditures)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fixed_asset_turnover_ratio/3">fixed_asset_turnover_ratio(net_sales, fixed_assets, accumulated_depreciation)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fixed_charge_coverage_ratio/3">fixed_charge_coverage_ratio(ebit, fixed_charges_before_taxes, interest)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#goodwill_to_assets/2">goodwill_to_assets(goodwill, assets)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#gross_margin_ratio/2">gross_margin_ratio(gross_margin, net_sales)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#gross_profit/2">gross_profit(total_sales, cogs)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#interest_coverage_ratio/2">interest_coverage_ratio(ebit, interest_expense)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#inventory_turnover_ratio/2">inventory_turnover_ratio(cogs, average_inventory)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#long_term_debt_to_total_asset_ratio/2">long_term_debt_to_total_asset_ratio(long_term_debt, total_assets)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#ltv/2">ltv(mortgage_amount, appraised_value_of_property)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#margin_of_revenue/2">margin_of_revenue(change_in_total_revenues, change_in_quantity_sold)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#margin_of_safety/2">margin_of_safety(actual_sales, break_even_point)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#margin_of_safety_ratio/2">margin_of_safety_ratio(actual_sales, break_even_point)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#net_income/2">net_income(total_revenues, total_expenses)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#ocf/4">ocf(operating_income, depreciation, taxes, change_in_working_capital)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#pe_ratio/2">pe_ratio(price, earnings_per_share)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#peg_ratio/2">peg_ratio(price_to_earnings, earnings_growth)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#receivable_turnover_ratio/2">receivable_turnover_ratio(net_credit_sales, average_accounts_receivable)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#retained_earnings/4">retained_earnings(beginning_period_retained_earnings, net_income, cash_dividends, stock_dividends)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#ror/2">ror(net_income, sales_revenue)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#ros/2">ros(operating_profit, net_sales)</a>
+  </div>
+</div>
+  </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions          </h1>
+          <div class="functions-list">
+<section class="detail" id="accumulated_depreciation_to_fixed_assets/2">
+  <div class="detail-header">
+    <a href="#accumulated_depreciation_to_fixed_assets/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">accumulated_depreciation_to_fixed_assets(accumulated_depreciation, total_fixed_assets)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="asset_coverage/5">
+  <div class="detail-header">
+    <a href="#asset_coverage/5" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">asset_coverage(total_assets, intangible_assets, current_liabilities, short_term_debt, total_debt)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="asset_turnover/2">
+  <div class="detail-header">
+    <a href="#asset_turnover/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">asset_turnover(net_sales, average_total_sales)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="average_inventory_period/2">
+  <div class="detail-header">
+    <a href="#average_inventory_period/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">average_inventory_period(days, inventory_turnover)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="average_payment_period/3">
+  <div class="detail-header">
+    <a href="#average_payment_period/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">average_payment_period(average_accounts_payable, total_credit_purchases, days)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="break_even_analysis/3">
+  <div class="detail-header">
+    <a href="#break_even_analysis/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">break_even_analysis(fixed_costs, sales_price_per_unit, variable_cost_per_unit)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="cagr/3">
+  <div class="detail-header">
+    <a href="#cagr/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">cagr(beginning_investment_value, ending_investment_value, years)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="capitalization_ratio/2">
+  <div class="detail-header">
+    <a href="#capitalization_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">capitalization_ratio(total_debt, shareholders_equity)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="cash_conversion_cycle/3">
+  <div class="detail-header">
+    <a href="#cash_conversion_cycle/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">cash_conversion_cycle(days_inventory_outstanding, days_sales_outstanding, days_payables_outstanding)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="cash_flow_coverage/2">
+  <div class="detail-header">
+    <a href="#cash_flow_coverage/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">cash_flow_coverage(operating_cash_flows, total_debt)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="cash_ratio/3">
+  <div class="detail-header">
+    <a href="#cash_ratio/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">cash_ratio(cash, cash_equivalents, total_current_liabilities)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="cogs/3">
+  <div class="detail-header">
+    <a href="#cogs/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">cogs(beginning_inventory, purchases, ending_inventory)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="contribution_margin/2">
+  <div class="detail-header">
+    <a href="#contribution_margin/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">contribution_margin(net_sales, variable_costs)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="current_ratio/2">
+  <div class="detail-header">
+    <a href="#current_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">current_ratio(current_assets, current_liabilities)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="debt_ratio/2">
+  <div class="detail-header">
+    <a href="#debt_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">debt_ratio(total_liabilities, total_assets)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="debt_to_asset/2">
+  <div class="detail-header">
+    <a href="#debt_to_asset/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">debt_to_asset(total_debt, total_assets)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="debt_to_capital/2">
+  <div class="detail-header">
+    <a href="#debt_to_capital/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">debt_to_capital(total_debt, shareholders_equity)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="debt_to_equity/2">
+  <div class="detail-header">
+    <a href="#debt_to_equity/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">debt_to_equity(total_liabilities, total_equity)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="dir/2">
+  <div class="detail-header">
+    <a href="#dir/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">dir(defensive_assets, daily_operational_expenses)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="dividend_payout/2">
+  <div class="detail-header">
+    <a href="#dividend_payout/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">dividend_payout(net_dividends, net_income)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="dividend_yield/2">
+  <div class="detail-header">
+    <a href="#dividend_yield/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">dividend_yield(cash_dividends_per_share, market_value_per_share)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="dpo/3">
+  <div class="detail-header">
+    <a href="#dpo/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">dpo(accounts_payable, cost_of_sales, days)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="dscr/2">
+  <div class="detail-header">
+    <a href="#dscr/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">dscr(operating_income, total_debt_service_costs)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="dsi/2">
+  <div class="detail-header">
+    <a href="#dsi/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">dsi(ending_inventory, cogs)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="dso/2">
+  <div class="detail-header">
+    <a href="#dso/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">dso(accounts_receivable, net_credit_sales)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="dti/2">
+  <div class="detail-header">
+    <a href="#dti/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">dti(total_monthly_debt_payments, gross_monthly_income)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="du_pont_analysis/3">
+  <div class="detail-header">
+    <a href="#du_pont_analysis/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">du_pont_analysis(profit_margin, total_asset_turnover, financial_leverage)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="earnings/2">
+  <div class="detail-header">
+    <a href="#earnings/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">earnings(net_income, preferred_dividends)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="ebit/3">
+  <div class="detail-header">
+    <a href="#ebit/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">ebit(revenue, cogs, operating_expenses)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="ebita/4">
+  <div class="detail-header">
+    <a href="#ebita/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">ebita(revenue, cogs, operating_expenses, amortization)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="ebitda/5">
+  <div class="detail-header">
+    <a href="#ebitda/5" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">ebitda(net_income, interest_expense, taxes, depreciation, amortization)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="eps_basic/2">
+  <div class="detail-header">
+    <a href="#eps_basic/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">eps_basic(earnings, shares_outstanding)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="eps_book_value/3">
+  <div class="detail-header">
+    <a href="#eps_book_value/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">eps_book_value(total_equity, preferred_equity, shares_outstanding)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="eps_cash/2">
+  <div class="detail-header">
+    <a href="#eps_cash/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">eps_cash(operating_cash_flow, shares_outstanding)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="eps_diluted/3">
+  <div class="detail-header">
+    <a href="#eps_diluted/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">eps_diluted(earnings, shares_outstanding, diluted_shares)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="eps_pro_forma/5">
+  <div class="detail-header">
+    <a href="#eps_pro_forma/5" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">eps_pro_forma(acquirers_net_income, targets_net_income, incremental_adjustments, shares_outstanding, diluted_shares)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="eps_retained/2">
+  <div class="detail-header">
+    <a href="#eps_retained/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">eps_retained(retained_earnings, shares_outstanding)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="equity_multiplier/2">
+  <div class="detail-header">
+    <a href="#equity_multiplier/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">equity_multiplier(total_assets, total_stockholders_equity)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="equity_ratio/2">
+  <div class="detail-header">
+    <a href="#equity_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">equity_ratio(total_equity, total_assets)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="ev/3">
+  <div class="detail-header">
+    <a href="#ev/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">ev(market_capitalization, debt, current_cash)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="expense_ratio/2">
+  <div class="detail-header">
+    <a href="#expense_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">expense_ratio(operating_expenses, average_value_of_fund_assets)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="fcf/2">
+  <div class="detail-header">
+    <a href="#fcf/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fcf(operating_cash_flow, capital_expenditures)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="fixed_asset_turnover_ratio/3">
+  <div class="detail-header">
+    <a href="#fixed_asset_turnover_ratio/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fixed_asset_turnover_ratio(net_sales, fixed_assets, accumulated_depreciation)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="fixed_charge_coverage_ratio/3">
+  <div class="detail-header">
+    <a href="#fixed_charge_coverage_ratio/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fixed_charge_coverage_ratio(ebit, fixed_charges_before_taxes, interest)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="goodwill_to_assets/2">
+  <div class="detail-header">
+    <a href="#goodwill_to_assets/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">goodwill_to_assets(goodwill, assets)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="gross_margin_ratio/2">
+  <div class="detail-header">
+    <a href="#gross_margin_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">gross_margin_ratio(gross_margin, net_sales)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="gross_profit/2">
+  <div class="detail-header">
+    <a href="#gross_profit/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">gross_profit(total_sales, cogs)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="interest_coverage_ratio/2">
+  <div class="detail-header">
+    <a href="#interest_coverage_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">interest_coverage_ratio(ebit, interest_expense)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="inventory_turnover_ratio/2">
+  <div class="detail-header">
+    <a href="#inventory_turnover_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">inventory_turnover_ratio(cogs, average_inventory)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="long_term_debt_to_total_asset_ratio/2">
+  <div class="detail-header">
+    <a href="#long_term_debt_to_total_asset_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">long_term_debt_to_total_asset_ratio(long_term_debt, total_assets)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="ltv/2">
+  <div class="detail-header">
+    <a href="#ltv/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">ltv(mortgage_amount, appraised_value_of_property)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="margin_of_revenue/2">
+  <div class="detail-header">
+    <a href="#margin_of_revenue/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">margin_of_revenue(change_in_total_revenues, change_in_quantity_sold)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="margin_of_safety/2">
+  <div class="detail-header">
+    <a href="#margin_of_safety/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">margin_of_safety(actual_sales, break_even_point)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="margin_of_safety_ratio/2">
+  <div class="detail-header">
+    <a href="#margin_of_safety_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">margin_of_safety_ratio(actual_sales, break_even_point)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="net_income/2">
+  <div class="detail-header">
+    <a href="#net_income/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">net_income(total_revenues, total_expenses)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="ocf/4">
+  <div class="detail-header">
+    <a href="#ocf/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">ocf(operating_income, depreciation, taxes, change_in_working_capital)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="pe_ratio/2">
+  <div class="detail-header">
+    <a href="#pe_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">pe_ratio(price, earnings_per_share)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="peg_ratio/2">
+  <div class="detail-header">
+    <a href="#peg_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">peg_ratio(price_to_earnings, earnings_growth)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="receivable_turnover_ratio/2">
+  <div class="detail-header">
+    <a href="#receivable_turnover_ratio/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">receivable_turnover_ratio(net_credit_sales, average_accounts_receivable)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="retained_earnings/4">
+  <div class="detail-header">
+    <a href="#retained_earnings/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">retained_earnings(beginning_period_retained_earnings, net_income, cash_dividends, stock_dividends)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="ror/2">
+  <div class="detail-header">
+    <a href="#ror/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">ror(net_income, sales_revenue)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="ros/2">
+  <div class="detail-header">
+    <a href="#ros/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">ros(operating_profit, net_sales)</h1>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+          </div>
+        </section>
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.22.6) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+  </body>
+</html>
