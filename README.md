@@ -5,6 +5,43 @@
 
 This is a finance library for elixir containing functions for common financial calculations that can be used as building blocks for complex financial modeling.
 
+
+## Installation
+
+The package can (soon) be installed by adding `financial` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:financials, "~> 0.1"}
+  ]
+end
+```
+
+## Usage
+
+Requests return a 2-tuple with the standard `:ok` or `:error` status.
+
+```elixir
+# Successful response
+{:ok, de_ratio} = Financials.debt_to_equity(100_000, 1_000_000)
+
+# Unsuccessful response due to argument type
+{:error, "Arguments must be numerical"} = Financials.net_income(100_000, "1_000_000")
+
+# Unsuccessful response due to argument value
+{:error, "total_equity can't be zero (Divide by zero error)"} = Financials.net_income(100_000, 0)
+```
+
+## Future plans
+
+- Config settings for decimal and rounding accuracy
+- Config settings for parsing numerical values from string format
+
+## Contributing
+
+Open an issue or create a fork and submit a pull request.
+
 ## Functions
 
 #### Net Income
