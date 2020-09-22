@@ -11,7 +11,7 @@ A financial modeling library for elixir. Contains functions that can be used as 
 
 ## Installation
 
-The package can (soon) be installed by adding `financial` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `financial` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
