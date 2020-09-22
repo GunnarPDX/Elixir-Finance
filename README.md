@@ -36,7 +36,7 @@ Requests return a 2-tuple with the standard `:ok` or `:error` status.
 ## Future plans
 
 - 🎯 Config settings for decimal and rounding accuracy
-- 📝➡︎🔢 Config settings for parsing numerical values from string format
+- 🔢 Config settings for parsing numerical values from string format
 
 ## Contributing
 
