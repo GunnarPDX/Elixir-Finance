@@ -3,7 +3,7 @@
 
 ***This library is currently incomplete!***
 
-This is a finance library for elixir containing functions for common financial calculations that can be used as building blocks for complex financial modeling.
+A financial modeling library for elixir. Contains functions that can be used as building blocks for complex financial modeling.
 
 
 ## Installation
