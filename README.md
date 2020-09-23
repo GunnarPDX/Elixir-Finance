@@ -31,7 +31,7 @@ Requests return a 2-tuple with the standard `:ok` or `:error` status.
 
 ```elixir
 # Successful response
-{:ok, debt_to_equity_ratio} = Financials.debt_to_equity(100_000, 1_000_000)
+{:ok, result} = Financials.debt_to_equity(100_000, 1_000_000)
 
 # Unsuccessful response due to argument type
 {:error, "Arguments must be numerical"} = Financials.net_income(100_000, "1_000_000")
