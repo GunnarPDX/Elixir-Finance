@@ -809,8 +809,6 @@ defmodule Financials do
   end
   def equity_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
-  # TODO: add below to readme
-
   ##--------------------------------------------------------------
   ## Expense Ratio Calculation
   ## @param float -- operating_expenses
@@ -984,7 +982,7 @@ defmodule Financials do
   end
   def long_term_debt_to_total_asset_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
-    ##--------------------------------------------------------------
+  ##--------------------------------------------------------------
   ## Margin of Safety Calculation
   ## @param float -- actual_sales
   ## @param float -- break_even_point

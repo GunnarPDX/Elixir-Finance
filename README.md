@@ -8,6 +8,10 @@
 
 A financial modeling library for elixir. Contains functions that can be used as building blocks for complex financial modeling.
 
+## Hex
+
+- Package: [Link](https://hex.pm/packages/financials)
+- Hex Docs: [Link](https://hexdocs.pm/financials/api-reference.html)
 
 ## Installation
 
@@ -46,6 +50,8 @@ Requests return a 2-tuple with the standard `:ok` or `:error` status.
 Open an issue or create a fork and submit a pull request.
 
 ## Functions
+
+##### (All arguments and successful results are numerical)
 
 #### Net Income
 
@@ -287,5 +293,73 @@ equity_multiplier(total_assets, total_stockholders_equity)
 equity_ratio(total_equity, total_assets)
 ```
 
-#### ...
-... 
+#### Expense Ratio
+```elixir
+expense_ratio(operating_expenses, average_value_of_fund_assets)
+```
+
+#### Fixed Asset Turnover Ratio
+```elixir
+fixed_asset_turnover_ratio(net_sales, fixed_assets, accumulated_depreciation)
+```
+
+#### Fixed Charge Coverage Ratio
+```elixir
+fixed_charge_coverage_ratio(ebit, fixed_charges_before_taxes, interest)
+```
+
+#### Free Cash Flow
+```elixir
+fcf(operating_cash_flow, capital_expenditures)
+```
+
+#### Goodwill to Assets
+```elixir
+goodwill_to_assets(goodwill, assets)
+```
+
+#### Gross Margin Ratio
+```elixir
+gross_margin_ratio(gross_margin, net_sales)
+```
+
+#### Gross Profit
+```elixir
+gross_profit(total_sales, cogs)
+```
+
+#### Interest Coverage Ratio 
+```elixir
+interest_coverage_ratio(ebit, interest_expense)
+```
+
+#### Inventory Turnover Ratio
+```elixir
+inventory_turnover_ratio(cogs, average_inventory)
+```
+
+#### Loan to Value Ratio
+```elixir
+ltv(mortgage_amount, appraised_value_of_property)
+```
+
+#### Long Term Debt to Total Asset Ratio 
+```elixir
+long_term_debt_to_total_asset_ratio(long_term_debt, total_assets)
+```
+
+#### Margin of Safety
+```elixir
+margin_of_safety(actual_sales, break_even_point)
+```
+
+#### Margin of Safety Ratio
+```elixir
+margin_of_safety_ratio(actual_sales, break_even_point)
+```
+
+#### Margin of Revenue
+```elixir
+margin_of_revenue(change_in_total_revenues, change_in_quantity_sold)
+```
+
