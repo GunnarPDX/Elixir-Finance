@@ -3,12 +3,7 @@ defmodule Financials do
   ##--------------------------------------------------------------
   ## CONSTANTS FOR ROUNDING
   ##--------------------------------------------------------------
-  @cash_decimal_precision 2
   @two_decimal_precision 2
-  @three_decimal_precision 3
-  @four_decimal_precision 4
-  @five_decimal_precision 5
-  @six_decimal_precision 6
 
   ##--------------------------------------------------------------
   ## Net Income Calculation
@@ -301,10 +296,9 @@ defmodule Financials do
     and is_number(sales_price_per_unit)
     and is_number(variable_cost_per_unit)
     do
-      price = (sales_price_per_unit - variable_cost_per_unit)
-      case price do
+      case (sales_price_per_unit - variable_cost_per_unit) do
         0 -> {:error, "sales_price_per_unit - variable_cost_per_unit can't equal zero (Divide by zero error)"}
-        _ -> {:ok, (Float.round(fixed_costs/price, @two_decimal_precision))}
+        price -> {:ok, (Float.round(fixed_costs/price, @two_decimal_precision))}
       end
   end
   def break_even_analysis(_, _, _), do: {:error, "Arguments must be numerical"}
@@ -410,7 +404,7 @@ defmodule Financials do
     do
       {:ok, (net_sales - variable_costs)}
   end
-  def contribution_margin(net_sales, variable_costs), do: {:error, "Arguments must be numerical"}
+  def contribution_margin(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Current Ratio Calculation
