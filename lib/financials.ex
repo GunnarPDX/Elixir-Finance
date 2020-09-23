@@ -669,7 +669,7 @@ defmodule Financials do
   ## @param float -- shares_outstanding
   ## @return float
   ##--------------------------------------------------------------
-  def eps_retained(_, 0), do: {:error, "shares_outstanding can't be zero"}
+  def eps_retained(_, 0), do: {:error, "shares_outstanding can't be zero (Divide by zero error)"}
   def eps_retained(retained_earnings, shares_outstanding)
     when is_number(retained_earnings)
     and is_number(shares_outstanding)
@@ -684,9 +684,14 @@ defmodule Financials do
   ## @param float -- shares_outstanding
   ## @return float
   ##--------------------------------------------------------------
-  def eps_cash(operating_cash_flow, shares_outstanding) do
-    Float.round(operating_cash_flow/shares_outstanding, @two_decimal_precision)
+  def eps_cash(_, 0), do: {:error, "shares_outstanding can't be zero (Divide by zero error)"}
+  def eps_cash(operating_cash_flow, shares_outstanding)
+    when is_number(operating_cash_flow)
+    and is_number(shares_outstanding)
+    do
+      {:ok, (Float.round(operating_cash_flow/shares_outstanding, @two_decimal_precision))}
   end
+  def eps_cash(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Price to Earnings Ratio Calculation
@@ -694,9 +699,14 @@ defmodule Financials do
   ## @param float -- earnings_per_share
   ## @return float
   ##--------------------------------------------------------------
-  def pe_ratio(price, earnings_per_share) do
-    Float.round(price/earnings_per_share, @two_decimal_precision)
+  def pe_ratio(_, 0), do: {:error, "earnings_per_share can't be zero (Divide by zero error)"}
+  def pe_ratio(price, earnings_per_share)
+    when is_number(price)
+    and is_number(earnings_per_share)
+    do
+      {:ok, (Float.round(price/earnings_per_share, @two_decimal_precision))}
   end
+  def pe_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Price to Earnings to Growth Ratio Calculation
@@ -704,9 +714,14 @@ defmodule Financials do
   ## @param float -- earnings_growth
   ## @return float
   ##--------------------------------------------------------------
-  def peg_ratio(price_to_earnings, earnings_growth) do
-    Float.round(price_to_earnings/earnings_growth, @two_decimal_precision)
+  def peg_ratio(_, 0), do: {:error, "earnings_growth can't be zero (Divide by zero error)"}
+  def peg_ratio(price_to_earnings, earnings_growth)
+    when is_number(price_to_earnings)
+    and is_number(earnings_growth)
+    do
+      {:ok, (Float.round(price_to_earnings/earnings_growth, @two_decimal_precision))}
   end
+  def peg_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Dividend Payout Calculation
@@ -714,9 +729,14 @@ defmodule Financials do
   ## @param float -- net_income
   ## @return float
   ##--------------------------------------------------------------
-  def dividend_payout(net_dividends, net_income) do
-    Float.round(net_dividends/net_income, @two_decimal_precision)
+  def dividend_payout(_, 0), do: {:error, "net_income can't be zero (Divide by zero error)"}
+  def dividend_payout(net_dividends, net_income)
+    when is_number(net_dividends)
+    and is_number(net_income)
+    do
+      {:ok, (Float.round(net_dividends/net_income, @two_decimal_precision))}
   end
+  def dividend_payout(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Dividend Yield Calculation
@@ -724,9 +744,14 @@ defmodule Financials do
   ## @param float -- market_value_per_share
   ## @return float
   ##--------------------------------------------------------------
-  def dividend_yield(cash_dividends_per_share, market_value_per_share) do
-    Float.round(cash_dividends_per_share/market_value_per_share, @two_decimal_precision)
+  def dividend_yield(_, 0), do: {:error, "market_value_per_share can't be zero (Divide by zero error)"}
+  def dividend_yield(cash_dividends_per_share, market_value_per_share)
+    when is_number(cash_dividends_per_share)
+    and is_number(market_value_per_share)
+    do
+      {:ok, (Float.round(cash_dividends_per_share/market_value_per_share, @two_decimal_precision))}
   end
+  def dividend_yield(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## DuPont Analysis Calculation
@@ -735,9 +760,14 @@ defmodule Financials do
   ## @param float -- financial_leverage
   ## @return float
   ##--------------------------------------------------------------
-  def du_pont_analysis(profit_margin, total_asset_turnover, financial_leverage) do
-    profit_margin * total_asset_turnover * financial_leverage
+  def du_pont_analysis(profit_margin, total_asset_turnover, financial_leverage)
+    when is_number(profit_margin)
+    and is_number(total_asset_turnover)
+    and is_number(financial_leverage)
+    do
+      {:ok, (profit_margin * total_asset_turnover * financial_leverage)}
   end
+  def du_pont_analysis(_, _, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Enterprise Value Calculation
@@ -746,10 +776,14 @@ defmodule Financials do
   ## @param float -- current_cash
   ## @return float
   ##--------------------------------------------------------------
-  # enterprise value
-  def ev(market_capitalization, debt, current_cash) do
-    market_capitalization + debt - current_cash
+  def ev(market_capitalization, debt, current_cash)
+    when is_number(market_capitalization)
+    and is_number(debt)
+    and is_number(current_cash)
+    do
+      {:ok, (market_capitalization + debt - current_cash)}
   end
+  def ev(_, _, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Equity Multiplier Calculation
@@ -757,9 +791,11 @@ defmodule Financials do
   ## @param float -- total_stockholders_equity
   ## @return float
   ##--------------------------------------------------------------
+  def equity_multiplier(_, 0), do: {:error, "total_stockholders_equity can't be zero (Divide by zero error)"}
   def equity_multiplier(total_assets, total_stockholders_equity) do
-    Float.round(total_assets/total_stockholders_equity, @two_decimal_precision)
+    {:ok, (Float.round(total_assets/total_stockholders_equity, @two_decimal_precision))}
   end
+  def equity_multiplier(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Equity Ratio Calculation
@@ -767,9 +803,11 @@ defmodule Financials do
   ## @param float -- total_assets
   ## @return float
   ##--------------------------------------------------------------
+  def equity_ratio(_, 0), do: {:error, "total_assets can't be zero (Divide by zero error)"}
   def equity_ratio(total_equity, total_assets) do
-    Float.round(total_equity/total_assets, @two_decimal_precision)
+    {:ok, (Float.round(total_equity/total_assets, @two_decimal_precision))}
   end
+  def equity_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
   # TODO: add below to readme
 
