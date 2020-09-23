@@ -81,22 +81,22 @@ ror(net_income, sales_revenue)
 ```elixir
 ros(operating_profit, net_sales)
 ```
-#### Cost of Goods Sold
+#### COGS -- Cost of Goods Sold
 ```elixir
 cogs(beginning_inventory, purchases, ending_inventory)
 ```
 
-#### Earnings Before Interest and Taxes
+#### EBIT -- Earnings Before Interest and Taxes
 ```elixir
 ebit(revenue, cogs, operating_expenses)
 ```
 
-#### Earnings Before Interest, Taxes, and Amortization
+#### EBITA -- Earnings Before Interest, Taxes, and Amortization
 ```elixir
 ebita(revenue, cogs, operating_expenses, amortization)
 ```
 
-#### Earnings Before Interest, Taxes, Depreciation, and Amortization
+#### EBITDA -- Earnings Before Interest, Taxes, Depreciation, and Amortization
 ```elixir
 ebitda(net_income, interest_expense, taxes, depreciation, amortization)
 ```
@@ -156,7 +156,7 @@ cash_flow_coverage(operating_cash_flows, total_debt)
 cash_ratio(cash, cash_equivalents, total_current_liabilities)
 ```
 
-#### Compounded Annual Growth Rate
+#### CAGR -- Compounded Annual Growth Rate
 ```elixir
 cagr(beginning_investment_value, ending_investment_value, years)
 ```
@@ -171,7 +171,7 @@ contribution_margin(net_sales, variable_costs)
 current_ratio(current_assets, current_liabilities)
 ```
 
-#### Days Payable Outstanding
+#### DPO -- Days Payable Outstanding
 ```elixir
 dpo(accounts_payable, cost_of_sales, days)
 ```
@@ -221,7 +221,7 @@ dti(total_monthly_debt_payments, gross_monthly_income)
 dir(defensive_assets, daily_operational_expenses)
 ```
 
-#### Earnings Per Share - Basic
+#### EPS -- Earnings Per Share - Basic
 ```elixir
 eps_basic(earnings, shares_outstanding)
 ```
@@ -251,7 +251,7 @@ eps_retained(retained_earnings, shares_outstanding)
 eps_cash(operating_cash_flow, shares_outstanding)
 ```
 
-#### Price to Earnings Ratio
+#### PE -- Price to Earnings Ratio
 ```elixir
 pe_ratio(price, earnings_per_share)
 ```
