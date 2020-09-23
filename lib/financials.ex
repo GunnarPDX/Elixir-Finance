@@ -792,8 +792,11 @@ defmodule Financials do
   ## @return float
   ##--------------------------------------------------------------
   def equity_multiplier(_, 0), do: {:error, "total_stockholders_equity can't be zero (Divide by zero error)"}
-  def equity_multiplier(total_assets, total_stockholders_equity) do
-    {:ok, (Float.round(total_assets/total_stockholders_equity, @two_decimal_precision))}
+  def equity_multiplier(total_assets, total_stockholders_equity)
+    when is_number(total_assets)
+    and is_number(total_stockholders_equity)
+    do
+      {:ok, (Float.round(total_assets/total_stockholders_equity, @two_decimal_precision))}
   end
   def equity_multiplier(_, _), do: {:error, "Arguments must be numerical"}
 
@@ -804,8 +807,11 @@ defmodule Financials do
   ## @return float
   ##--------------------------------------------------------------
   def equity_ratio(_, 0), do: {:error, "total_assets can't be zero (Divide by zero error)"}
-  def equity_ratio(total_equity, total_assets) do
-    {:ok, (Float.round(total_equity/total_assets, @two_decimal_precision))}
+  def equity_ratio(total_equity, total_assets)
+    when is_number(total_assets)
+    and is_number(total_equity)
+    do
+      {:ok, (Float.round(total_equity/total_assets, @two_decimal_precision))}
   end
   def equity_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
@@ -817,9 +823,14 @@ defmodule Financials do
   ## @param float -- average_value_of_fund_assets
   ## @return float
   ##--------------------------------------------------------------
-  def expense_ratio(operating_expenses, average_value_of_fund_assets) do
-    Float.round(operating_expenses/average_value_of_fund_assets, @two_decimal_precision)
+  def expense_ratio(_, 0), do: {:error, "average_value_of_fund_assets can't be zero (Divide by zero error)"}
+  def expense_ratio(operating_expenses, average_value_of_fund_assets)
+    when is_number(operating_expenses)
+    and is_number(average_value_of_fund_assets)
+    do
+      {:ok, (Float.round(operating_expenses/average_value_of_fund_assets, @two_decimal_precision))}
   end
+  def expense_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Fixed Asset Turnover Ratio
@@ -828,9 +839,17 @@ defmodule Financials do
   ## @param float -- accumulated_depreciation
   ## @return float
   ##--------------------------------------------------------------
-  def fixed_asset_turnover_ratio(net_sales, fixed_assets, accumulated_depreciation) do
-    Float.round(net_sales/(fixed_assets - accumulated_depreciation), @two_decimal_precision)
+  def fixed_asset_turnover_ratio(net_sales, fixed_assets, accumulated_depreciation)
+    when is_number(net_sales)
+    and is_number(fixed_assets)
+    and is_number(accumulated_depreciation)
+    do
+      case (fixed_assets - accumulated_depreciation) do
+        0 -> {:error, "fixed_assets - accumulated_depreciation can't equal zero (Divide by zero error)"}
+        depreciated_assets -> {:ok, (Float.round(net_sales/depreciated_assets, @two_decimal_precision))}
+      end
   end
+  def fixed_asset_turnover_ratio(_, _, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Fixed Charge Coverage Ratio
@@ -839,9 +858,17 @@ defmodule Financials do
   ## @param float -- interest
   ## @return float
   ##--------------------------------------------------------------
-  def fixed_charge_coverage_ratio(ebit, fixed_charges_before_taxes, interest) do
-    Float.round((ebit + fixed_charges_before_taxes)/(fixed_charges_before_taxes + interest), @two_decimal_precision)
+  def fixed_charge_coverage_ratio(ebit, fixed_charges_before_taxes, interest)
+    when is_number(ebit)
+    and is_number(fixed_charges_before_taxes)
+    and is_number(interest)
+    do
+      case (fixed_charges_before_taxes + interest) do
+        0 -> {:error, "fixed_charges_before_taxes + interest can't equal zero (Divide by zero error)"}
+        res -> {:ok, (Float.round((ebit + fixed_charges_before_taxes)/res, @two_decimal_precision))}
+      end
   end
+  def fixed_charge_coverage_ratio(_, _, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Free Cash Flow Calculation
@@ -849,9 +876,13 @@ defmodule Financials do
   ## @param float -- capital_expenditures
   ## @return float
   ##--------------------------------------------------------------
-  def fcf(operating_cash_flow, capital_expenditures) do
-    operating_cash_flow - capital_expenditures
+  def fcf(operating_cash_flow, capital_expenditures)
+    when is_number(operating_cash_flow)
+    and is_number(capital_expenditures)
+    do
+      {:ok, (operating_cash_flow - capital_expenditures)}
   end
+  def fcf(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Goodwill to Assets Calculation
@@ -859,9 +890,14 @@ defmodule Financials do
   ## @param float -- assets
   ## @return float
   ##--------------------------------------------------------------
-  def goodwill_to_assets(goodwill, assets) do
-    Float.round(goodwill/assets, @two_decimal_precision)
+  def goodwill_to_assets(_, 0), do: {:error, "assets can't be zero (Divide by zero error)"}
+  def goodwill_to_assets(goodwill, assets)
+    when is_number(goodwill)
+    and is_number(assets)
+    do
+      {:ok, Float.round(goodwill/assets, @two_decimal_precision)}
   end
+  def goodwill_to_assets(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Gross Margin Ratio Calculation
@@ -869,9 +905,15 @@ defmodule Financials do
   ## @param float -- net_sales
   ## @return float
   ##--------------------------------------------------------------
-  def gross_margin_ratio(gross_margin, net_sales) do
-    Float.round(gross_margin/net_sales, @two_decimal_precision)
+  def gross_margin_ratio(_, 0), do: {:error, "net_sales can't be zero (Divide by zero error)"}
+  def gross_margin_ratio(gross_margin, net_sales)
+    when is_number(gross_margin)
+    and is_number(net_sales)
+    do
+      {:ok, (Float.round(gross_margin/net_sales, @two_decimal_precision))}
   end
+  def gross_margin_ratio(_, _), do: {:error, "Arguments must be numerical"}
+
 
   ##--------------------------------------------------------------
   ## Gross Profit Calculation
@@ -879,9 +921,13 @@ defmodule Financials do
   ## @param float -- cogs
   ## @return float
   ##--------------------------------------------------------------
-  def gross_profit(total_sales, cogs) do
-    total_sales - cogs
+  def gross_profit(total_sales, cogs)
+    when is_number(total_sales)
+    and is_number(cogs)
+    do
+      {:ok, (total_sales - cogs)}
   end
+  def gross_profit(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Interest Coverage Ratio Calculation
@@ -889,14 +935,14 @@ defmodule Financials do
   ## @param float -- interest_expense
   ## @return float
   ##--------------------------------------------------------------
-  def interest_coverage_ratio(ebit, interest_expense) do
-    Float.round(ebit/interest_expense, @two_decimal_precision)
+  def interest_coverage_ratio(_, 0), do: {:error, "interest_expense can't be zero (Divide by zero error)"}
+  def interest_coverage_ratio(ebit, interest_expense)
+    when is_number(ebit)
+    and is_number(interest_expense)
+    do
+      {:ok, (Float.round(ebit/interest_expense, @two_decimal_precision))}
   end
-
-  ##--------------------------------------------------------------
-  ##
-  ##--------------------------------------------------------------
-  # TODO: add XIRR wrapper
+  def interest_coverage_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Inventory Turnover Ratio
@@ -904,9 +950,14 @@ defmodule Financials do
   ## @param float -- average_inventory
   ## @return float
   ##--------------------------------------------------------------
-  def inventory_turnover_ratio(cogs, average_inventory) do
-    Float.round(cogs/average_inventory, @two_decimal_precision)
+  def inventory_turnover_ratio(_, 0), do: {:error, "average_inventory can't be zero (Divide by zero error)"}
+  def inventory_turnover_ratio(cogs, average_inventory)
+    when is_number(cogs)
+    and is_number(average_inventory)
+    do
+      {:ok, (Float.round(cogs/average_inventory, @two_decimal_precision))}
   end
+  def inventory_turnover_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Loan to Value Ratio Calculation
@@ -914,9 +965,15 @@ defmodule Financials do
   ## @param float -- appraised_value_of_property
   ## @return float
   ##--------------------------------------------------------------
-  def ltv(mortgage_amount, appraised_value_of_property) do
-    Float.round(mortgage_amount/appraised_value_of_property, @two_decimal_precision)
+  def ltv(_, 0), do: {:error, "appraised_value_of_property can't be zero (Divide by zero error)"}
+  def ltv(mortgage_amount, appraised_value_of_property)
+    when is_number(mortgage_amount)
+    and is_number(appraised_value_of_property)
+    do
+      {:ok, (Float.round(mortgage_amount/appraised_value_of_property, @two_decimal_precision))}
   end
+  def ltv(_, _), do: {:error, "Arguments must be numerical"}
+
 
   ##--------------------------------------------------------------
   ## Long Term Debt to Total Asset Ratio Calculation
@@ -924,19 +981,28 @@ defmodule Financials do
   ## @param float -- total_assets
   ## @return float
   ##--------------------------------------------------------------
-  def long_term_debt_to_total_asset_ratio(long_term_debt, total_assets) do
-    Float.round(long_term_debt/total_assets, @two_decimal_precision)
+  def long_term_debt_to_total_asset_ratio(_, 0), do: {:error, "total_assets can't be zero (Divide by zero error)"}
+  def long_term_debt_to_total_asset_ratio(long_term_debt, total_assets)
+    when is_number(long_term_debt)
+    and is_number(total_assets)
+    do
+      {:ok, (Float.round(long_term_debt/total_assets, @two_decimal_precision))}
   end
+  def long_term_debt_to_total_asset_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
-  ##--------------------------------------------------------------
+    ##--------------------------------------------------------------
   ## Margin of Safety Calculation
   ## @param float -- actual_sales
   ## @param float -- break_even_point
   ## @return float
   ##--------------------------------------------------------------
-  def margin_of_safety(actual_sales, break_even_point) do
-    actual_sales - break_even_point
+  def margin_of_safety(actual_sales, break_even_point)
+    when is_number(actual_sales)
+    and is_number(break_even_point)
+    do
+      {:ok, (actual_sales - break_even_point)}
   end
+  def margin_of_safety(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Margin of Safety Ratio Calculation
@@ -944,9 +1010,14 @@ defmodule Financials do
   ## @param float -- break_even_point
   ## @return float
   ##--------------------------------------------------------------
-  def margin_of_safety_ratio(actual_sales, break_even_point) do
-    Float.round((actual_sales - break_even_point)/actual_sales, @two_decimal_precision)
+  def margin_of_safety_ratio(0, _), do: {:error, "actual_sales can't be zero (Divide by zero error)"}
+  def margin_of_safety_ratio(actual_sales, break_even_point)
+    when is_number(actual_sales)
+    and is_number(break_even_point)
+    do
+      {:ok, (Float.round((actual_sales - break_even_point)/actual_sales, @two_decimal_precision))}
   end
+  def margin_of_safety_ratio(_, _), do: {:error, "Arguments must be numerical"}
 
   ##--------------------------------------------------------------
   ## Margin of Revenue Calculation
@@ -954,8 +1025,14 @@ defmodule Financials do
   ## @param float -- change_in_quantity_sold
   ## @return float
   ##--------------------------------------------------------------
-  def margin_of_revenue(change_in_total_revenues, change_in_quantity_sold) do
-    Float.round(change_in_total_revenues/change_in_quantity_sold, @two_decimal_precision)
+  def margin_of_revenue(_, 0), do: {:error, "change_in_quantity_sold can't be zero (Divide by zero error)"}
+  def margin_of_revenue(change_in_total_revenues, change_in_quantity_sold)
+    when is_number(change_in_total_revenues)
+    and is_number(change_in_quantity_sold)
+    do
+      {:ok, (Float.round(change_in_total_revenues/change_in_quantity_sold, @two_decimal_precision))}
   end
+  def margin_of_revenue(_, _), do: {:error, "Arguments must be numerical"}
+
 
 end
