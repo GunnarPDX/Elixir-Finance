@@ -32,9 +32,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Net Income Calculation
-  @param Decimal -- total_revenues
-  @param Decimal -- total_expenses
+  Net Income Calculation
   """
   def net_income(%Decimal{} = total_revenues, %Decimal{} = total_expenses),
       do: {:ok, D.sub(total_revenues, total_expenses)}
@@ -44,9 +42,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Net Earnings Calculation
-  @param Decimal -- net_income
-  @param Decimal -- preferred_dividends
+  Net Earnings Calculation
   """
   def earnings(%Decimal{} = net_income, %Decimal{} = preferred_dividends),
       do: {:ok, D.sub(net_income, preferred_dividends)}
@@ -56,11 +52,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Retained Earnings Calculation
-  @param Decimal -- beginning_period_retained_earnings
-  @param Decimal -- net_income
-  @param Decimal -- cash_dividends
-  @param Decimal -- stock_dividends
+  Retained Earnings Calculation
   """
   def retained_earnings(
         %Decimal{} = beginning_period_retained_earnings,
@@ -79,11 +71,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Operating Cash Flow Calculation
-  @param Decimal -- operating_income
-  @param Decimal -- depreciation
-  @param Decimal -- taxes
-  @param Decimal -- change_in_working_capital
+  Operating Cash Flow Calculation
   """
   def ocf(
         %Decimal{} = operating_income,
@@ -102,9 +90,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Return on Revenue Calculation
-  @param Decimal -- net_income
-  @param Decimal -- sales_revenue
+  Return on Revenue Calculation
   """
   def ror(%Decimal{coef: 0} = _, %Decimal{coef: 0} = _),
       do: {:ok, D.new(0)}
@@ -120,9 +106,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Return on Sales Calculation
-  @param Decimal -- operating_profit
-  @param Decimal -- net_sales
+  Return on Sales Calculation
   """
   def ros(_, %Decimal{coef: 0} = _),
       do: {:error, "net_sales #{@zero_error}"}
@@ -135,10 +119,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Cost of Goods Sold Calculation
-  @param Decimal -- beginning_inventory
-  @param Decimal -- purchases
-  @param Decimal -- ending_inventory
+  Cost of Goods Sold Calculation
   """
   def cogs(%Decimal{} = beginning_inventory, %Decimal{} = purchases, %Decimal{} = ending_inventory),
       do: {:ok, D.add(beginning_inventory, D.sub(purchases, ending_inventory))}
@@ -148,10 +129,7 @@ defmodule Financials do
 
 
   @doc """
-  ## EBIT -- Earnings Before Interest and Taxes Calculation
-  @param Decimal -- revenue
-  @param Decimal -- cogs
-  @param Decimal -- operating_expenses
+  EBIT -- Earnings Before Interest and Taxes Calculation
   """
   def ebit(%Decimal{} = revenue, %Decimal{} = cogs, %Decimal{} = operating_expenses),
       do: {:ok, D.sub(revenue, D.sub(cogs, operating_expenses))}
@@ -161,11 +139,7 @@ defmodule Financials do
 
 
   @doc """
-  ## EBITA -- Earnings Before Interest, Taxes, and Amortization Calculation
-  @param Decimal -- revenue
-  @param Decimal -- cogs
-  @param Decimal -- operating_expenses
-  @param Decimal -- amortization
+  EBITA -- Earnings Before Interest, Taxes, and Amortization Calculation
   """
   def ebita(
         %Decimal{} = revenue,
@@ -181,12 +155,7 @@ defmodule Financials do
 
 
   @doc """
-  ## EBITDA -- Earnings Before Interest, Taxes, Depreciation and Amortization Calculation
-  @param Decimal -- net_income
-  @param Decimal -- interest_expense
-  @param Decimal -- taxes
-  @param Decimal -- depreciation
-  @param Decimal -- amortization
+  EBITDA -- Earnings Before Interest, Taxes, Depreciation and Amortization Calculation
   """
   def ebitda(
         %Decimal{} = net_income,
@@ -203,9 +172,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Receivable Turnover Ratio Calculation
-  @param Decimal -- net_credit_sales
-  @param Decimal -- average_accounts_receivable
+  Receivable Turnover Ratio Calculation
   """
   def receivable_turnover_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "avg_accounts_receivable #{@zero_error}"}
@@ -218,9 +185,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Accumulated Depreciation to Fixed Assets Calculation
-  @param Decimal -- accumulated_depreciation
-  @param Decimal -- total_fixed_assets
+  Accumulated Depreciation to Fixed Assets Calculation
   """
   def accumulated_depreciation_to_fixed_assets(_, %Decimal{coef: 0} = _),
       do: {:error, "total_fixed_assets #{@zero_error}"}
@@ -237,12 +202,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Asset Coverage Ratio Calculation
-  @param Decimal -- total_assets
-  @param Decimal -- intangible_assets
-  @param Decimal -- current_liabilities
-  @param Decimal -- short_term_debt
-  @param Decimal -- total_debt
+  Asset Coverage Ratio Calculation
   """
   def asset_coverage(_, _, _, _, %Decimal{coef: 0} = _),
       do: {:error, "total_debt #{@zero_error}"}
@@ -264,9 +224,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Asset Turnover Ratio Calculation
-  @param Decimal -- net_sales
-  @param Decimal -- average_total_sales
+  Asset Turnover Ratio Calculation
   """
   def asset_turnover(_, %Decimal{coef: 0} = _),
       do: {:error, "average_total_sales #{@zero_error}"}
@@ -279,9 +237,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Average Inventory Period Calculation
-  @param int/Decimal -- days
-  @param Decimal -- inventory_turnover
+  Average Inventory Period Calculation
   """
   def average_inventory_period(_, %Decimal{coef: 0} = _),
       do: {:error, "inventory_turnover #{@zero_error}"}
@@ -293,10 +249,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Average Payment Period Calculation
-  @param Decimal -- average_accounts_payable
-  @param Decimal -- total_credit_purchases
-  @param int -- days
+  Average Payment Period Calculation
   """
   def average_payment_period(_, %Decimal{coef: 0} = _, 0),
       do: {:error, "days & total_credit_purchases #{@zero_error}"}
@@ -342,10 +295,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Break Even Analysis Calculation
-  @param Decimal -- fixed_costs
-  @param Decimal -- sales_price_per_unit
-  @param Decimal -- variable_cost_per_unit
+  Break Even Analysis Calculation
   """
   def break_even_analysis(
         %Decimal{} = fixed_costs,
@@ -364,9 +314,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Capitalization Ratio Calculation
-  @param Decimal -- total_debt
-  @param Decimal -- shareholders_equity
+  Capitalization Ratio Calculation
   """
   def capitalization_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "shareholders_equity #{@zero_error}"}
@@ -379,10 +327,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Cash Conversion Cycle Calculation
-  @param Decimal -- days_inventory_outstanding
-  @param Decimal --  days_sales_outstanding
-  @param Decimal -- days_payables_outstanding
+  Cash Conversion Cycle Calculation
   """
   def cash_conversion_cycle(
         %Decimal{} = days_inventory_outstanding,
@@ -397,9 +342,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Cash Flow Coverage Ratio Calculation
-  @param Decimal -- operating_cash_flows
-  @param Decimal -- total_debt
+  Cash Flow Coverage Ratio Calculation
   """
   def cash_flow_coverage(_, %Decimal{coef: 0} = _),
       do: {:error,  "total_debt #{@zero_error}"}
@@ -413,10 +356,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Cash Ratio Calculation
-  @param Decimal -- cash
-  @param Decimal -- cash_equivalents
-  @param Decimal -- total_current_liabilities
+  Cash Ratio Calculation
   """
   def cash_ratio(_, _, %Decimal{coef: 0} = _),
       do: {:error, "cash_equivalents #{@zero_error}"}
@@ -433,10 +373,7 @@ defmodule Financials do
       do: {:error, @arg_msg}
 
   @doc """
-  ## Compound Annual Growth Rate Calculation
-  @param Decimal -- beginning_investment_value
-  @param Decimal -- ending_investment_value
-  @param int -- years
+  Compound Annual Growth Rate Calculation
   """
   def cagr(%Decimal{coef: 0} = _, _, 0),
       do: {:error, "beginning_investment_amount & years #{@zero_error}"}
@@ -483,9 +420,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Contribution Margin Calculation
-  @param Decimal -- net_sales
-  @param Decimal -- variable_costs
+  Contribution Margin Calculation
   """
   def contribution_margin(%Decimal{} = net_sales, %Decimal{} = variable_costs),
       do: {:ok, D.sub(net_sales, variable_costs)}
@@ -495,9 +430,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Current Ratio Calculation
-  @param Decimal -- current_assets
-  @param Decimal -- current_liabilities
+  Current Ratio Calculation
   """
   def current_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "current_liabilities #{@zero_error}"}
@@ -509,10 +442,7 @@ defmodule Financials do
       do: {:error, @arg_msg}
 
   @doc """
-  ## Days Payable Outstanding Calculation
-  @param Decimal -- accounts_payable
-  @param Decimal -- cost_of_sales
-  @param int -- days
+  Days Payable Outstanding Calculation
   """
   def dpo(_, %Decimal{coef: 0} = _, %Decimal{coef: 0} = _),
       do: {:error, "cost_of_sales & days #{@zero_error}"}
@@ -538,9 +468,7 @@ defmodule Financials do
       do: {:error, @arg_msg}
 
   @doc """
-  ## Days Sales in Inventory Calculation
-  @param Decimal -- ending_inventory
-  @param Decimal -- cogs
+  Days Sales in Inventory Calculation
   """
   def dsi(_, %Decimal{coef: 0} = _),
       do: {:error, "cogs #{@zero_error}"}
@@ -553,9 +481,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Days Sales Outstanding Calculation
-  @param Decimal -- accounts_receivable
-  @param Decimal -- net_credit_sales
+  Days Sales Outstanding Calculation
   """
   def dso(_, %Decimal{coef: 0} = _),
       do: {:error, "net_credit_sales #{@zero_error}"}
@@ -568,9 +494,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Debt Ratio Calculation
-  @param Decimal -- total_liabilities
-  @param Decimal -- total_assets
+  Debt Ratio Calculation
   """
   def debt_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "total_assets #{@zero_error}"}
@@ -583,9 +507,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Debt Service Coverage Ratio
-  @param Decimal -- operating_income
-  @param Decimal -- total_debt_service_costs
+  Debt Service Coverage Ratio
   """
   def dscr(_, %Decimal{coef: 0} = _),
       do: {:error, "total_debt_service_costs #{@zero_error}"}
@@ -598,9 +520,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Debt to Asset Ratio Calculation
-  @param Decimal -- total_debt
-  @param float -- total_assets
+  Debt to Asset Ratio Calculation
   """
   def debt_to_asset(_, %Decimal{coef: 0} = _),
       do: {:error, "total_assets #{@zero_error}"}
@@ -612,9 +532,7 @@ defmodule Financials do
       do: {:error, @arg_msg}
 
   @doc """
-  ## Debt ot Capital Ratio Calculation
-  @param float -- total_debt
-  @param float -- shareholders_equity
+  Debt ot Capital Ratio Calculation
   """
   def debt_to_capital(_, %Decimal{coef: 0} = _),
       do: {:error, "shareholders_equity #{@zero_error}"}
@@ -627,9 +545,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Debt to Equity Ratio Calculation
-  @param float -- total_liabilities
-  @param float -- total_equity
+  Debt to Equity Ratio Calculation
   """
   def debt_to_equity(_, %Decimal{coef: 0} = _),
       do: {:error, "total_equity #{@zero_error}"}
@@ -642,9 +558,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Debt to Income Ratio Calculation
-  @param float -- total_monthly_debt_payments
-  @param float -- gross_monthly_income
+  Debt to Income Ratio Calculation
   """
   def dti(_, %Decimal{coef: 0} = _),
       do: {:error, "gross_monthly_income #{@zero_error}"}
@@ -657,9 +571,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Defensive Interval Ratio Calculation
-  @param float -- defensive_assets
-  @param float -- daily_operational_expenses
+  Defensive Interval Ratio Calculation
   """
   def dir(_, %Decimal{coef: 0} = _),
       do: {:error, "daily_operational_expenses #{@zero_error}"}
@@ -672,9 +584,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Basic Earnings Per Share Calculation
-  @param float -- earnings
-  @param float -- shares_outstanding
+  Basic Earnings Per Share Calculation
   """
   def eps_basic(_, %Decimal{coef: 0} = _),
       do: {:error, "shares_outstanding #{@zero_error}"}
@@ -687,10 +597,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Diluted Earnings Per Share Calculation
-  @param float -- earnings
-  @param float -- shares_outstanding
-  @param float -- diluted_shares
+  Diluted Earnings Per Share Calculation
   """
   def eps_diluted(%Decimal{} = earnings, %Decimal{} = shares_outstanding, %Decimal{} = diluted_shares) do
     if D.lt?(shares_outstanding, 1) or D.lt?(diluted_shares, 0) do
@@ -706,12 +613,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Pro Forma Earnings Per Share Calculation
-  @param float -- acquirers_net_income
-  @param float -- targets_net_income
-  @param float -- incremental_adjustments
-  @param float -- shares_outstanding
-  @param float -- diluted_shares
+  Pro Forma Earnings Per Share Calculation
   """
   def eps_pro_forma(
         %Decimal{} = acquirers_net_income,
@@ -734,10 +636,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Book Value Earnings Per Share Calculation
-  @param float -- total_equity
-  @param float -- preferred_equity
-  @param float -- shares_outstanding
+  Book Value Earnings Per Share Calculation
   """
   def eps_book_value(_, _, %Decimal{coef: 0} = _),
       do: {:error, "shares_outstanding #{@zero_error}"}
@@ -750,9 +649,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Retained Earnings Per Share Calculation
-  @param float -- retained_earnings
-  @param float -- shares_outstanding
+  Retained Earnings Per Share Calculation
   """
   def eps_retained(_, %Decimal{coef: 0} = _),
       do: {:error, "shares_outstanding #{@zero_error}"}
@@ -765,9 +662,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Cash Earnings Per Share Calculation
-  @param float -- operating_cash_flow
-  @param float -- shares_outstanding
+  Cash Earnings Per Share Calculation
   """
   def eps_cash(_, %Decimal{coef: 0} = _),
       do: {:error, "shares_outstanding #{@zero_error}"}
@@ -780,9 +675,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Price to Earnings Ratio Calculation
-  @param float -- price
-  @param float -- earnings_per_share
+  Price to Earnings Ratio Calculation
   """
   def pe_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "earnings_per_share #{@zero_error}"}
@@ -795,9 +688,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Price to Earnings to Growth Ratio Calculation
-  @param float -- price_to_earnings
-  @param float -- earnings_growth
+  Price to Earnings to Growth Ratio Calculation
   """
   def peg_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "earnings_growth #{@zero_error}"}
@@ -810,9 +701,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Dividend Payout Calculation
-  @param float -- net_dividends
-  @param float -- net_income
+  Dividend Payout Calculation
   """
   def dividend_payout(_, %Decimal{coef: 0} = _),
       do: {:error, "net_income #{@zero_error}"}
@@ -825,9 +714,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Dividend Yield Calculation
-  @param float -- cash_dividends_per_share
-  @param float -- market_value_per_share
+  Dividend Yield Calculation
   """
   def dividend_yield(_, %Decimal{coef: 0} = _),
       do: {:error, "market_value_per_share #{@zero_error}"}
@@ -840,10 +727,7 @@ defmodule Financials do
 
 
   @doc """
-  ## DuPont Analysis Calculation
-  @param float -- profit_margin
-  @param float -- total_asset_turnover
-  @param float -- financial_leverage
+  DuPont Analysis Calculation
   """
   def du_pont_analysis(%Decimal{} = profit_margin, %Decimal{} = total_asset_turnover, %Decimal{} = financial_leverage),
       do: {:ok, D.mult(profit_margin, D.mult(total_asset_turnover, financial_leverage))}
@@ -853,10 +737,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Enterprise Value Calculation
-  @param float -- market_capitalization
-  @param float -- debt
-  @param float -- current_cash
+  Enterprise Value Calculation
   """
   def ev(%Decimal{} = market_capitalization, %Decimal{} = debt, %Decimal{} = current_cash),
       do: {:ok, D.sub(D.add(market_capitalization, debt), current_cash)}
@@ -866,9 +747,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Equity Multiplier Calculation
-  @param float -- total_assets
-  @param float -- total_stockholders_equity
+  Equity Multiplier Calculation
   """
   def equity_multiplier(_, %Decimal{coef: 0} = _),
       do: {:error, "total_stockholders_equity #{@zero_error}"}
@@ -881,9 +760,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Equity Ratio Calculation
-  @param float -- total_equity
-  @param float -- total_assets
+  Equity Ratio Calculation
   """
   def equity_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "total_assets #{@zero_error}"}
@@ -896,9 +773,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Expense Ratio Calculation
-  @param float -- operating_expenses
-  @param float -- average_value_of_fund_assets
+  Expense Ratio Calculation
   """
   def expense_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "average_value_of_fund_assets #{@zero_error}"}
@@ -911,10 +786,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Fixed Asset Turnover Ratio
-  @param float -- net_sales
-  @param float -- fixed_assets
-  @param float -- accumulated_depreciation
+  Fixed Asset Turnover Ratio
   """
   def fixed_asset_turnover_ratio(
         %Decimal{} = net_sales,
@@ -933,10 +805,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Fixed Charge Coverage Ratio
-  @param float -- ebit
-  @param float -- fixed_charges_before_taxes
-  @param float -- interest
+  Fixed Charge Coverage Ratio
   """
   def fixed_charge_coverage_ratio(
         %Decimal{} = ebit,
@@ -955,9 +824,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Free Cash Flow Calculation
-  @param float -- operating_cash_flow
-  @param float -- capital_expenditures
+  Free Cash Flow Calculation
   """
   def fcf(%Decimal{} = operating_cash_flow, %Decimal{} = capital_expenditures),
       do: {:ok, D.sub(operating_cash_flow, capital_expenditures)}
@@ -967,9 +834,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Goodwill to Assets Calculation
-  @param float -- goodwill
-  @param float -- assets
+  Goodwill to Assets Calculation
   """
   def goodwill_to_assets(_, %Decimal{coef: 0} = _),
       do: {:error, "assets #{@zero_error}"}
@@ -982,9 +847,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Gross Margin Ratio Calculation
-  @param float -- gross_margin
-  @param float -- net_sales
+  Gross Margin Ratio Calculation
   """
   def gross_margin_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "net_sales #{@zero_error}"}
@@ -997,9 +860,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Gross Profit Calculation
-  @param float -- total_sales
-  @param float -- cogs
+  Gross Profit Calculation
   """
   def gross_profit(%Decimal{} = total_sales, %Decimal{} = cogs),
       do: {:ok, D.sub(total_sales, cogs)}
@@ -1009,9 +870,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Interest Coverage Ratio Calculation
-  @param float -- ebit
-  @param float -- interest_expense
+  Interest Coverage Ratio Calculation
   """
   def interest_coverage_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "interest_expense #{@zero_error}"}
@@ -1024,9 +883,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Inventory Turnover Ratio
-  @param float -- cogs
-  @param float -- average_inventory
+  Inventory Turnover Ratio
   """
   def inventory_turnover_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "average_inventory #{@zero_error}"}
@@ -1039,9 +896,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Loan to Value Ratio Calculation
-  @param float -- mortgage_amount
-  @param float -- appraised_value_of_property
+  Loan to Value Ratio Calculation
   """
   def ltv(_, %Decimal{coef: 0} = _),
       do: {:error, "appraised_value_of_property #{@zero_error}"}
@@ -1054,9 +909,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Long Term Debt to Total Asset Ratio Calculation
-  @param float -- long_term_debt
-  @param float -- total_assets
+  Long Term Debt to Total Asset Ratio Calculation
   """
   def long_term_debt_to_total_asset_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "total_assets #{@zero_error}"}
@@ -1069,9 +922,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Margin of Safety Calculation
-  @param float -- actual_sales
-  @param float -- break_even_point
+  Margin of Safety Calculation
   """
   def margin_of_safety(%Decimal{} = actual_sales, %Decimal{} = break_even_point),
       do: {:ok, D.sub(actual_sales, break_even_point)}
@@ -1081,9 +932,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Margin of Safety Ratio Calculation
-  @param float -- actual_sales
-  @param float -- break_even_point
+  Margin of Safety Ratio Calculation
   """
   def margin_of_safety_ratio(%Decimal{coef: 0} = _, _),
       do: {:error, "actual_sales #{@zero_error}"}
@@ -1096,9 +945,7 @@ defmodule Financials do
 
 
   @doc """
-  ## Margin of Revenue Calculation
-  @param float -- change_in_total_revenues
-  @param float -- change_in_quantity_sold
+  Margin of Revenue Calculation
   """
   def margin_of_revenue(_, %Decimal{coef: 0} = _),
       do: {:error, "change_in_quantity_sold #{@zero_error}"}
