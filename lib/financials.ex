@@ -92,6 +92,8 @@ defmodule Financials do
   @doc """
   Return on Revenue Calculation
   """
+  def ror(net_income, sales_revenue)
+
   def ror(%Decimal{coef: 0} = _, %Decimal{coef: 0} = _),
       do: {:ok, D.new(0)}
 
@@ -108,6 +110,8 @@ defmodule Financials do
   @doc """
   Return on Sales Calculation
   """
+  def ros(operating_profit, net_sales)
+
   def ros(_, %Decimal{coef: 0} = _),
       do: {:error, "net_sales #{@zero_error}"}
 
@@ -174,6 +178,8 @@ defmodule Financials do
   @doc """
   Receivable Turnover Ratio Calculation
   """
+  def receivable_turnover_ratio(net_credit_sales, average_accounts_receivable)
+
   def receivable_turnover_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "avg_accounts_receivable #{@zero_error}"}
 
@@ -187,6 +193,8 @@ defmodule Financials do
   @doc """
   Accumulated Depreciation to Fixed Assets Calculation
   """
+  def accumulated_depreciation_to_fixed_assets(accumulated_depreciation, total_fixed_assets)
+
   def accumulated_depreciation_to_fixed_assets(_, %Decimal{coef: 0} = _),
       do: {:error, "total_fixed_assets #{@zero_error}"}
 
@@ -204,6 +212,8 @@ defmodule Financials do
   @doc """
   Asset Coverage Ratio Calculation
   """
+  def asset_coverage(total_assets, intangible_assets, current_liabilities, short_term_debt, total_debt)
+
   def asset_coverage(_, _, _, _, %Decimal{coef: 0} = _),
       do: {:error, "total_debt #{@zero_error}"}
 
@@ -226,6 +236,8 @@ defmodule Financials do
   @doc """
   Asset Turnover Ratio Calculation
   """
+  def asset_turnover(net_sales, average_total_sales)
+
   def asset_turnover(_, %Decimal{coef: 0} = _),
       do: {:error, "average_total_sales #{@zero_error}"}
 
@@ -239,6 +251,8 @@ defmodule Financials do
   @doc """
   Average Inventory Period Calculation
   """
+  def average_inventory_period(days, inventory_turnover)
+
   def average_inventory_period(_, %Decimal{coef: 0} = _),
       do: {:error, "inventory_turnover #{@zero_error}"}
 
@@ -251,6 +265,8 @@ defmodule Financials do
   @doc """
   Average Payment Period Calculation
   """
+  def average_payment_period(average_accounts_payable, total_credit_purchases, days)
+
   def average_payment_period(_, %Decimal{coef: 0} = _, 0),
       do: {:error, "days & total_credit_purchases #{@zero_error}"}
 
@@ -316,6 +332,8 @@ defmodule Financials do
   @doc """
   Capitalization Ratio Calculation
   """
+  def capitalization_ratio(total_debt, shareholders_equity)
+
   def capitalization_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "shareholders_equity #{@zero_error}"}
 
@@ -344,6 +362,8 @@ defmodule Financials do
   @doc """
   Cash Flow Coverage Ratio Calculation
   """
+  def cash_flow_coverage(operating_cash_flows, total_debt)
+
   def cash_flow_coverage(_, %Decimal{coef: 0} = _),
       do: {:error,  "total_debt #{@zero_error}"}
 
@@ -358,6 +378,8 @@ defmodule Financials do
   @doc """
   Cash Ratio Calculation
   """
+  def cash_ratio(cash, cash_equivalents, total_current_liabilities)
+
   def cash_ratio(_, _, %Decimal{coef: 0} = _),
       do: {:error, "cash_equivalents #{@zero_error}"}
 
@@ -375,6 +397,8 @@ defmodule Financials do
   @doc """
   Compound Annual Growth Rate Calculation
   """
+  def cagr(beginning_investment_value, ending_investment_value, years)
+
   def cagr(%Decimal{coef: 0} = _, _, 0),
       do: {:error, "beginning_investment_amount & years #{@zero_error}"}
 
@@ -432,6 +456,8 @@ defmodule Financials do
   @doc """
   Current Ratio Calculation
   """
+  def current_ratio(current_assets, current_liabilities)
+
   def current_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "current_liabilities #{@zero_error}"}
 
@@ -444,6 +470,8 @@ defmodule Financials do
   @doc """
   Days Payable Outstanding Calculation
   """
+  def dpo(accounts_payable, cost_of_sales, days)
+
   def dpo(_, %Decimal{coef: 0} = _, %Decimal{coef: 0} = _),
       do: {:error, "cost_of_sales & days #{@zero_error}"}
 
@@ -470,6 +498,8 @@ defmodule Financials do
   @doc """
   Days Sales in Inventory Calculation
   """
+  def dsi(ending_inventory, cogs)
+
   def dsi(_, %Decimal{coef: 0} = _),
       do: {:error, "cogs #{@zero_error}"}
 
@@ -483,6 +513,8 @@ defmodule Financials do
   @doc """
   Days Sales Outstanding Calculation
   """
+  def dso(accounts_receivable, net_credit_sales)
+
   def dso(_, %Decimal{coef: 0} = _),
       do: {:error, "net_credit_sales #{@zero_error}"}
 
@@ -496,6 +528,8 @@ defmodule Financials do
   @doc """
   Debt Ratio Calculation
   """
+  def debt_ratio(total_liabilities, total_assets)
+
   def debt_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "total_assets #{@zero_error}"}
 
@@ -509,6 +543,8 @@ defmodule Financials do
   @doc """
   Debt Service Coverage Ratio
   """
+  def dscr(operating_income, total_debt_service_costs)
+
   def dscr(_, %Decimal{coef: 0} = _),
       do: {:error, "total_debt_service_costs #{@zero_error}"}
 
@@ -522,6 +558,8 @@ defmodule Financials do
   @doc """
   Debt to Asset Ratio Calculation
   """
+  def debt_to_asset(total_debt, total_assets)
+
   def debt_to_asset(_, %Decimal{coef: 0} = _),
       do: {:error, "total_assets #{@zero_error}"}
 
@@ -534,6 +572,8 @@ defmodule Financials do
   @doc """
   Debt ot Capital Ratio Calculation
   """
+  def debt_to_capital(total_debt, shareholders_equity)
+
   def debt_to_capital(_, %Decimal{coef: 0} = _),
       do: {:error, "shareholders_equity #{@zero_error}"}
 
@@ -547,6 +587,8 @@ defmodule Financials do
   @doc """
   Debt to Equity Ratio Calculation
   """
+  def debt_to_equity(total_liabilities, total_equity)
+
   def debt_to_equity(_, %Decimal{coef: 0} = _),
       do: {:error, "total_equity #{@zero_error}"}
 
@@ -560,6 +602,8 @@ defmodule Financials do
   @doc """
   Debt to Income Ratio Calculation
   """
+  def dti(total_monthly_debt_payments, gross_monthly_income)
+
   def dti(_, %Decimal{coef: 0} = _),
       do: {:error, "gross_monthly_income #{@zero_error}"}
 
@@ -573,6 +617,8 @@ defmodule Financials do
   @doc """
   Defensive Interval Ratio Calculation
   """
+  def dir(defensive_assets, daily_operational_expenses)
+
   def dir(_, %Decimal{coef: 0} = _),
       do: {:error, "daily_operational_expenses #{@zero_error}"}
 
@@ -586,6 +632,8 @@ defmodule Financials do
   @doc """
   Basic Earnings Per Share Calculation
   """
+  def eps_basic(earnings, shares_outstanding)
+
   def eps_basic(_, %Decimal{coef: 0} = _),
       do: {:error, "shares_outstanding #{@zero_error}"}
 
@@ -638,6 +686,8 @@ defmodule Financials do
   @doc """
   Book Value Earnings Per Share Calculation
   """
+  def eps_book_value(total_equity, preferred_equity, shares_outstanding)
+
   def eps_book_value(_, _, %Decimal{coef: 0} = _),
       do: {:error, "shares_outstanding #{@zero_error}"}
 
@@ -651,6 +701,8 @@ defmodule Financials do
   @doc """
   Retained Earnings Per Share Calculation
   """
+  def eps_retained(retained_earnings, shares_outstanding)
+
   def eps_retained(_, %Decimal{coef: 0} = _),
       do: {:error, "shares_outstanding #{@zero_error}"}
 
@@ -664,6 +716,8 @@ defmodule Financials do
   @doc """
   Cash Earnings Per Share Calculation
   """
+  def eps_cash(operating_cash_flow, shares_outstanding)
+
   def eps_cash(_, %Decimal{coef: 0} = _),
       do: {:error, "shares_outstanding #{@zero_error}"}
 
@@ -677,6 +731,8 @@ defmodule Financials do
   @doc """
   Price to Earnings Ratio Calculation
   """
+  def pe_ratio(price, earnings_per_share)
+
   def pe_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "earnings_per_share #{@zero_error}"}
 
@@ -690,6 +746,8 @@ defmodule Financials do
   @doc """
   Price to Earnings to Growth Ratio Calculation
   """
+  def peg_ratio(price_to_earnings, earnings_growth)
+
   def peg_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "earnings_growth #{@zero_error}"}
 
@@ -703,6 +761,8 @@ defmodule Financials do
   @doc """
   Dividend Payout Calculation
   """
+  def dividend_payout(net_dividends, net_income)
+
   def dividend_payout(_, %Decimal{coef: 0} = _),
       do: {:error, "net_income #{@zero_error}"}
 
@@ -716,6 +776,8 @@ defmodule Financials do
   @doc """
   Dividend Yield Calculation
   """
+  def dividend_yield(cash_dividends_per_share, market_value_per_share)
+
   def dividend_yield(_, %Decimal{coef: 0} = _),
       do: {:error, "market_value_per_share #{@zero_error}"}
 
@@ -749,6 +811,8 @@ defmodule Financials do
   @doc """
   Equity Multiplier Calculation
   """
+  def equity_multiplier(total_assets, total_stockholders_equity)
+
   def equity_multiplier(_, %Decimal{coef: 0} = _),
       do: {:error, "total_stockholders_equity #{@zero_error}"}
 
@@ -762,6 +826,8 @@ defmodule Financials do
   @doc """
   Equity Ratio Calculation
   """
+  def equity_ratio(total_equity, total_assets)
+
   def equity_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "total_assets #{@zero_error}"}
 
@@ -775,6 +841,8 @@ defmodule Financials do
   @doc """
   Expense Ratio Calculation
   """
+  def expense_ratio(operating_expenses, average_value_of_fund_assets)
+
   def expense_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "average_value_of_fund_assets #{@zero_error}"}
 
@@ -836,6 +904,8 @@ defmodule Financials do
   @doc """
   Goodwill to Assets Calculation
   """
+  def goodwill_to_assets(goodwill, assets)
+
   def goodwill_to_assets(_, %Decimal{coef: 0} = _),
       do: {:error, "assets #{@zero_error}"}
 
@@ -849,6 +919,8 @@ defmodule Financials do
   @doc """
   Gross Margin Ratio Calculation
   """
+  def gross_margin_ratio(gross_margin, net_sales)
+
   def gross_margin_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "net_sales #{@zero_error}"}
 
@@ -872,6 +944,8 @@ defmodule Financials do
   @doc """
   Interest Coverage Ratio Calculation
   """
+  def interest_coverage_ratio(ebit, interest_expense)
+
   def interest_coverage_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "interest_expense #{@zero_error}"}
 
@@ -885,6 +959,8 @@ defmodule Financials do
   @doc """
   Inventory Turnover Ratio
   """
+  def inventory_turnover_ratio(cogs, average_inventory)
+
   def inventory_turnover_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "average_inventory #{@zero_error}"}
 
@@ -898,6 +974,8 @@ defmodule Financials do
   @doc """
   Loan to Value Ratio Calculation
   """
+  def ltv(mortgage_amount, appraised_value_of_property)
+
   def ltv(_, %Decimal{coef: 0} = _),
       do: {:error, "appraised_value_of_property #{@zero_error}"}
 
@@ -911,6 +989,8 @@ defmodule Financials do
   @doc """
   Long Term Debt to Total Asset Ratio Calculation
   """
+  def long_term_debt_to_total_asset_ratio(long_term_debt, total_assets)
+
   def long_term_debt_to_total_asset_ratio(_, %Decimal{coef: 0} = _),
       do: {:error, "total_assets #{@zero_error}"}
 
@@ -934,6 +1014,8 @@ defmodule Financials do
   @doc """
   Margin of Safety Ratio Calculation
   """
+  def margin_of_safety_ratio(actual_sales, break_even_point)
+
   def margin_of_safety_ratio(%Decimal{coef: 0} = _, _),
       do: {:error, "actual_sales #{@zero_error}"}
 
@@ -947,6 +1029,8 @@ defmodule Financials do
   @doc """
   Margin of Revenue Calculation
   """
+  def margin_of_revenue(change_in_total_revenues, change_in_quantity_sold)
+
   def margin_of_revenue(_, %Decimal{coef: 0} = _),
       do: {:error, "change_in_quantity_sold #{@zero_error}"}
 
