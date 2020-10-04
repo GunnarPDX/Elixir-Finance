@@ -1,128 +1,159 @@
 defmodule Financials do
 
+  alias Decimal, as: D
+
+  @moduledoc """
+  A financial modeling library for elixir. Contains functions that can be used as building blocks for complex financial modeling.
+
+  ## Usage
+
+  Requests return a 2-tuple with the standard `:ok` or `:error` status.
+
+  ```elixir
+  # Successful response
+  {:ok, result} = Financials.debt_to_equity(100_000, 1_000_000)
+
+  # Unsuccessful response due to argument type
+  {:error, "Arguments must be numerical"} = Financials.net_income(100_000, "1_000_000")
+
+  # Unsuccessful response due to argument value
+  {:error, "total_equity can't be zero (Divide by zero error)"} = Financials.net_income(100_000, 0)
+  ```
+
+  ## Functions
+  """
+
   ##--------------------------------------------------------------
-  ## CONSTANTS FOR ROUNDING
+  ## CONSTANTS
   ##--------------------------------------------------------------
   @two_decimal_precision 2
+  @arg_msg "Arguments must be decimals"
 
-  ##--------------------------------------------------------------
-  ## Net Income Calculation
-  ## @param float -- total_revenues
-  ## @param float -- total_expenses
-  ## @return tuple - {atom, float}
-  ##--------------------------------------------------------------
-  def net_income(total_revenues, total_expenses)
-    when is_number(total_expenses)
-    and is_number(total_revenues)
-    do
-      {:ok, (total_revenues - total_expenses)}
+  @doc """
+  Net Income Calculation
+  @param Decimal -- total_revenues
+  @param Decimal -- total_expenses
+  """
+  def net_income(%Decimal{} = total_revenues, %Decimal{} = total_expenses),
+      do: {:ok, D.sub(total_revenues, total_expenses)}
+
+  def net_income(_, _),
+      do: {:error, @arg_msg}
+
+
+  @doc """
+  Net Earnings Calculation
+  @param Decimal -- net_income
+  @param Decimal -- preferred_dividends
+  """
+  def earnings(%Decimal{} = net_income, %Decimal{} = preferred_dividends),
+      do: {:ok, D.sub(net_income, preferred_dividends)}
+
+  def earnings(_, _),
+      do: {:error, @arg_msg}
+
+
+  @doc """
+  Retained Earnings Calculation
+  @param Decimal -- beginning_period_retained_earnings
+  @param Decimal -- net_income
+  @param Decimal -- cash_dividends
+  @param Decimal -- stock_dividends
+  """
+  def retained_earnings(
+        %Decimal{} = beginning_period_retained_earnings,
+        %Decimal{} = net_income,
+        %Decimal{} = cash_dividends,
+        %Decimal{} = stock_dividends
+        ) do
+    earnings = D.add(beginning_period_retained_earnings, net_income)
+    dividend_expenses = D.sub(cash_dividends, stock_dividends)
+
+    {:ok, D.sub(earnings, dividend_expenses)}
   end
-  def net_income(_, _), do: {:error, "Arguments must be numerical"}
 
-  ##--------------------------------------------------------------
-  ## Net Earnings Calculation
-  ## @param float -- net_income
-  ## @param float -- preferred_dividends
-  ## @return tuple - {atom, float}
-  ##--------------------------------------------------------------
-  def earnings(net_income, preferred_dividends)
-    when is_number(net_income)
-    and is_number(preferred_dividends)
-    do
-      {:ok, (net_income - preferred_dividends)}
+  def retained_earnings(_, _, _, _),
+      do: {:error, @arg_msg}
+
+
+  @doc """
+  Operating Cash Flow Calculation
+  @param Decimal -- operating_income
+  @param Decimal -- depreciation
+  @param Decimal -- taxes
+  @param Decimal -- change_in_working_capital
+  """
+  def ocf(
+        %Decimal{} = operating_income,
+        %Decimal{} = depreciation,
+        %Decimal{} = taxes,
+        %Decimal{} = change_in_working_capital
+      )do
+    r1 = D.add(operating_income, depreciation)
+    r2 = D.add(taxes, change_in_working_capital)
+
+    {:ok, D.sub(r1, r2)}
   end
-  def earnings(_, _), do: {:error, "Arguments must be numerical"}
 
-  ##--------------------------------------------------------------
-  ## Retained Earnings Calculation
-  ## @param float -- beginning_period_retained_earnings
-  ## @param float -- net_income
-  ## @param float -- cash_dividends
-  ## @param float -- stock_dividends
-  ## @return tuple - {atom, float}
-  ##--------------------------------------------------------------
-  def retained_earnings(beginning_period_retained_earnings, net_income, cash_dividends, stock_dividends)
-    when is_number(beginning_period_retained_earnings)
-    and is_number(net_income)
-    and is_number(cash_dividends)
-    and is_number(stock_dividends)
-    do
-      {:ok, (beginning_period_retained_earnings + net_income - cash_dividends - stock_dividends)}
-  end
-  def retained_earnings(_, _, _, _), do: {:error, "Arguments must be numerical"}
+  def ocf(_, _, _, _),
+      do: {:error, @arg_msg}
 
-  # TODO: change_in_working_capital
 
-  ##--------------------------------------------------------------
-  ## Operating Cash Flow Calculation
-  ## @param float -- operating_income
-  ## @param float -- depreciation
-  ## @param float -- taxes
-  ## @param float -- change_in_working_capital
-  ## @return tuple - {atom, float}
-  ##--------------------------------------------------------------
-  def ocf(operating_income, depreciation, taxes, change_in_working_capital)
-    when is_number(operating_income)
-    and is_number(depreciation)
-    and is_number(taxes)
-    and is_number(change_in_working_capital)
-    do
-      {:ok, (operating_income + depreciation - taxes + change_in_working_capital)}
-  end
-  def ocf(_, _, _, _), do: {:error, "Arguments must be numerical"}
+  @doc """
+  Return on Revenue Calculation
+  @param Decimal -- net_income
+  @param Decimal -- sales_revenue
+  """
+  def ror(0, 0),
+      do: {:ok, D.new(0)}
 
-  ##--------------------------------------------------------------
-  ## Return on Revenue Calculation
-  ## @param float -- net_income
-  ## @param float -- sales_revenue
-  ## @return tuple - {atom, float}
-  ##--------------------------------------------------------------
-  def ror(_, 0), do: {:error, "Sales revenue cannot be zero (divide by zero error)"}
-  def ror(net_income, sales_revenue)
-    when is_number(net_income)
-    and is_number(sales_revenue)
-    do
-      {:ok, (net_income/sales_revenue)}
-  end
-  def ror(_, _), do: {:error, "Arguments must be numeric"}
+  def ror(_, 0),
+      do: {:error, "sales_revenue cannot be zero (divide by zero error)"}
 
-  ##--------------------------------------------------------------
-  ## Return on Sales Calculation
-  ## @param float -- operating_profit
-  ## @param float -- net_sales
-  ## @return tuple - {atom, float}
-  ##--------------------------------------------------------------
-  def ros(_, 0), do: {:error, "Net sales cannot be zero (divide by zero error"}
-  def ros(operating_profit, net_sales)
-    when is_number(operating_profit)
-    and is_number(net_sales)
-    do
-      {:ok, (operating_profit/net_sales)}
-  end
-  def ros(_, _), do: {:error, "Arguments must be numerical"}
+  def ror(%Decimal{} = net_income, %Decimal{} = sales_revenue),
+      do: {:ok, D.div(net_income, sales_revenue)}
 
-  ##--------------------------------------------------------------
-  ## Cost of Goods Sold Calculation
-  ## @param float -- beginning_inventory
-  ## @param float -- purchases
-  ## @param float -- ending_inventory
-  ## @return float
-  ##--------------------------------------------------------------
-  def cogs(beginning_inventory, purchases, ending_inventory)
-    when is_number(beginning_inventory)
-    and is_number(purchases)
-    and is_number(ending_inventory)
-    do
-      {:ok, (beginning_inventory + purchases - ending_inventory)}
-  end
-  def cogs(_, _, _), do: {:error, "Arguments must be numerical"}
+  def ror(_, _),
+      do: {:error, @arg_msg}
+
+
+  @doc """
+  Return on Sales Calculation
+  @param Decimal -- operating_profit
+  @param Decimal -- net_sales
+  """
+  def ros(_, 0),
+      do: {:ok, D.new(0)}
+
+  def ros(_, 0),
+      do: {:error, "Net sales cannot be zero (divide by zero error"}
+
+  def ros(%Decimal{} = operating_profit, %Decimal{} = net_sales),
+      do: {:ok, D.div(operating_profit, net_sales)}
+
+  def ros(_, _),
+      do: {:error, @arg_msg}
+
+
+  @doc """
+  Cost of Goods Sold Calculation
+  @param Decimal -- beginning_inventory
+  @param Decimal -- purchases
+  @param Decimal -- ending_inventory
+  """
+  def cogs(%Decimal{} = beginning_inventory, %Decimal{} = purchases, %Decimal{} = ending_inventory),
+      do: {:ok, D.add(beginning_inventory, D.sub(purchases, ending_inventory))}
+
+  def cogs(_, _, _),
+      do: {:error, @arg_msg}
+
 
   ##--------------------------------------------------------------
   ## EBIT -- Earnings Before Interest and Taxes Calculation
-  ## @param float -- revenue
-  ## @param float -- cogs
-  ## @param float -- operating_expenses
-  ## @return float
+  ## @param Decimal -- revenue
+  ## @param Decimal -- cogs
+  ## @param Decimal -- operating_expenses
+  ## @return Decimal
   ##--------------------------------------------------------------
   def ebit(revenue, cogs, operating_expenses)
     when is_number(revenue)
@@ -137,11 +168,11 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## EBITA -- Earnings Before Interest, Taxes, and Amortization Calculation
-  ## @param float -- revenue
-  ## @param float -- cogs
-  ## @param float -- operating_expenses
-  ## @param float -- amortization
-  ## @return float
+  ## @param Decimal -- revenue
+  ## @param Decimal -- cogs
+  ## @param Decimal -- operating_expenses
+  ## @param Decimal -- amortization
+  ## @return Decimal
   ##--------------------------------------------------------------
   def ebita(revenue, cogs, operating_expenses, amortization)
     when is_number(revenue)
@@ -157,12 +188,12 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## EBITDA -- Earnings Before Interest, Taxes, Depreciation and Amortization Calculation
-  ## @param float -- net_income
-  ## @param float -- interest_expense
-  ## @param float -- taxes
-  ## @param float -- depreciation
-  ## @param float -- amortization
-  ## @return float
+  ## @param Decimal -- net_income
+  ## @param Decimal -- interest_expense
+  ## @param Decimal -- taxes
+  ## @param Decimal -- depreciation
+  ## @param Decimal -- amortization
+  ## @return Decimal
   ##--------------------------------------------------------------
   def ebitda(net_income, interest_expense, taxes, depreciation, amortization)
     when is_number(net_income)
@@ -180,9 +211,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Receivable Turnover Ratio Calculation
-  ## @param float -- net_credit_sales
-  ## @param float -- average_accounts_receivable
-  ## @return float
+  ## @param Decimal -- net_credit_sales
+  ## @param Decimal -- average_accounts_receivable
+  ## @return Decimal
   ##--------------------------------------------------------------
   def receivable_turnover_ratio(_, 0), do: {:error, "Avg accounts receivable can't be zero (Divide by zero error)"}
   def receivable_turnover_ratio(net_credit_sales, average_accounts_receivable)
@@ -198,9 +229,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Accumulated Depreciation to Fixed Assets Calculation
-  ## @param float -- accumulated_depreciation
-  ## @param float -- total_fixed_assets
-  ## @return float
+  ## @param Decimal -- accumulated_depreciation
+  ## @param Decimal -- total_fixed_assets
+  ## @return Decimal
   ##--------------------------------------------------------------
   def accumulated_depreciation_to_fixed_assets(_, 0), do: {:error, "Total fixed assets can't be zero (Divide by zero error)"}
   def accumulated_depreciation_to_fixed_assets(accumulated_depreciation, total_fixed_assets)
@@ -213,12 +244,12 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Asset Coverage Ratio Calculation
-  ## @param float -- total_assets
-  ## @param float -- intangible_assets
-  ## @param float -- current_liabilities
-  ## @param float -- short_term_debt
-  ## @param float -- total_debt
-  ## @return float
+  ## @param Decimal -- total_assets
+  ## @param Decimal -- intangible_assets
+  ## @param Decimal -- current_liabilities
+  ## @param Decimal -- short_term_debt
+  ## @param Decimal -- total_debt
+  ## @return Decimal
   ##--------------------------------------------------------------
   def asset_coverage(_, _, _, _, 0), do: {:error, "Total debt can't be zero (Divide by zero error)"}
   def asset_coverage(total_assets, intangible_assets, current_liabilities, short_term_debt, total_debt)
@@ -236,9 +267,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Asset Turnover Ratio Calculation
-  ## @param float -- net_sales
-  ## @param float -- average_total_sales
-  ## @return float
+  ## @param Decimal -- net_sales
+  ## @param Decimal -- average_total_sales
+  ## @return Decimal
   ##--------------------------------------------------------------
   def asset_turnover(_, 0), do: {:error, "Average total sales can't be zero (Divide by zero error)"}
   def asset_turnover(net_sales, average_total_sales)
@@ -251,9 +282,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Average Inventory Period Calculation
-  ## @param int/float -- days
-  ## @param float -- inventory_turnover
-  ## @return float
+  ## @param int/Decimal -- days
+  ## @param Decimal -- inventory_turnover
+  ## @return Decimal
   ##--------------------------------------------------------------
   def average_inventory_period(_, 0), do: {:error, "Inventory turnover can't be zero (Divide by zero error)"}
   def average_inventory_period(days, inventory_turnover)
@@ -266,10 +297,10 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Average Payment Period Calculation
-  ## @param float -- average_accounts_payable
-  ## @param float -- total_credit_purchases
+  ## @param Decimal -- average_accounts_payable
+  ## @param Decimal -- total_credit_purchases
   ## @param int -- days
-  ## @return float
+  ## @return Decimal
   ##--------------------------------------------------------------
   def average_payment_period(_, 0, 0), do: {:error, "Days and total credit purchases can't be zero (Divide by zero error)"}
   def average_payment_period(_, _, 0), do: {:error, "Days can't be zero (Divide by zero error)"}
@@ -286,10 +317,10 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Break Even Analysis Calculation
-  ## @param float -- fixed_costs
-  ## @param float -- sales_price_per_unit
-  ## @param float -- variable_cost_per_unit
-  ## @return float
+  ## @param Decimal -- fixed_costs
+  ## @param Decimal -- sales_price_per_unit
+  ## @param Decimal -- variable_cost_per_unit
+  ## @return Decimal
   ##--------------------------------------------------------------
   def break_even_analysis(fixed_costs, sales_price_per_unit, variable_cost_per_unit)
     when is_number(fixed_costs)
@@ -305,9 +336,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Capitalization Ratio Calculation
-  ## @param float -- total_debt
-  ## @param float -- shareholders_equity
-  ## @return float
+  ## @param Decimal -- total_debt
+  ## @param Decimal -- shareholders_equity
+  ## @return Decimal
   ##--------------------------------------------------------------
   def capitalization_ratio(_, 0), do: {:error, "Shareholders_equity can't be zero (Divide by zero error)"}
   def capitalization_ratio(total_debt, shareholders_equity)
@@ -324,10 +355,10 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Cash Conversion Cycle Calculation
-  ## @param float -- days_inventory_outstanding
-  ## @param float --  days_sales_outstanding
-  ## @param float -- days_payables_outstanding
-  ## @return float
+  ## @param Decimal -- days_inventory_outstanding
+  ## @param Decimal --  days_sales_outstanding
+  ## @param Decimal -- days_payables_outstanding
+  ## @return Decimal
   ##--------------------------------------------------------------
   def cash_conversion_cycle(days_inventory_outstanding, days_sales_outstanding, days_payables_outstanding)
     when is_number(days_inventory_outstanding)
@@ -341,9 +372,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Cash Flow Coverage Ratio Calculation
-  ## @param float -- operating_cash_flows
-  ## @param float -- total_debt
-  ## @return float
+  ## @param Decimal -- operating_cash_flows
+  ## @param Decimal -- total_debt
+  ## @return Decimal
   ##--------------------------------------------------------------
   def cash_flow_coverage(_, 0), do: {:error,  "total_debt can't be zero (Divide by zero error)"}
   def cash_flow_coverage(operating_cash_flows, total_debt)
@@ -356,10 +387,10 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Cash Ratio Calculation
-  ## @param float -- cash
-  ## @param float -- cash_equivalents
-  ## @param float -- total_current_liabilities
-  ## @return float
+  ## @param Decimal -- cash
+  ## @param Decimal -- cash_equivalents
+  ## @param Decimal -- total_current_liabilities
+  ## @return Decimal
   ##--------------------------------------------------------------
   def cash_ratio(_, _, 0), do: {:error, "cash_equivalents can't be zero (Divide by zero error)"}
   def cash_ratio(cash, cash_equivalents, total_current_liabilities)
@@ -373,10 +404,10 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Compound Annual Growth Rate Calculation
-  ## @param float -- beginning_investment_value
-  ## @param float -- ending_investment_value
+  ## @param Decimal -- beginning_investment_value
+  ## @param Decimal -- ending_investment_value
   ## @param int -- years
-  ## @return float
+  ## @return Decimal
   ##--------------------------------------------------------------
   def cagr(0, _, 0), do: {:error, "beginning_investment_amount and years can't be zero (Divide by zero error)"}
   def cagr(0, _, _), do: {:error, "beginning_investment_amount can't be zero (Divide by zero error)"}
@@ -394,9 +425,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Contribution Margin Calculation
-  ## @param float -- net_sales
-  ## @param float -- variable_costs
-  ## @return float
+  ## @param Decimal -- net_sales
+  ## @param Decimal -- variable_costs
+  ## @return Decimal
   ##--------------------------------------------------------------
   def contribution_margin(net_sales, variable_costs)
     when is_number(net_sales)
@@ -408,9 +439,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Current Ratio Calculation
-  ## @param float -- current_assets
-  ## @param float -- current_liabilities
-  ## @return float
+  ## @param Decimal -- current_assets
+  ## @param Decimal -- current_liabilities
+  ## @return Decimal
   ##--------------------------------------------------------------
   def current_ratio(_, 0), do: {:error, "current_liabilities can't be zero (Divide by zero error)"}
   def current_ratio(current_assets, current_liabilities)
@@ -423,10 +454,10 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Days Payable Outstanding Calculation
-  ## @param float -- accounts_payable
-  ## @param float -- cost_of_sales
+  ## @param Decimal -- accounts_payable
+  ## @param Decimal -- cost_of_sales
   ## @param int -- days
-  ## @return float
+  ## @return Decimal
   ##--------------------------------------------------------------
   def dpo(_, 0, 0), do: {:error, "cost_of_sales and days can't be zero (Divide by zero error)"}
   def dpo(_, 0, _), do: {:error, "cost_of_sales can't be zero (Divide by zero error)"}
@@ -443,9 +474,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Days Sales in Inventory Calculation
-  ## @param float -- ending_inventory
-  ## @param float -- cogs
-  ## @return float
+  ## @param Decimal -- ending_inventory
+  ## @param Decimal -- cogs
+  ## @return Decimal
   ##--------------------------------------------------------------
   def dsi(_, 0), do: {:error, "cogs can't be zero (Divide by zero error)"}
   def dsi(ending_inventory, cogs)
@@ -458,9 +489,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Days Sales Outstanding Calculation
-  ## @param float -- accounts_receivable
-  ## @param float -- net_credit_sales
-  ## @return float
+  ## @param Decimal -- accounts_receivable
+  ## @param Decimal -- net_credit_sales
+  ## @return Decimal
   ##--------------------------------------------------------------
   def dso(_, 0), do: {:error, "net_credit_sales can't be zero (Divide by zero error)"}
   def dso(accounts_receivable, net_credit_sales)
@@ -474,9 +505,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Debt Ratio Calculation
-  ## @param float -- total_liabilities
-  ## @param float -- total_assets
-  ## @return float
+  ## @param Decimal -- total_liabilities
+  ## @param Decimal -- total_assets
+  ## @return Decimal
   ##--------------------------------------------------------------
   def debt_ratio(_, 0), do: {:error, "total_assets can't be zero (Divide by zero error)"}
   def debt_ratio(total_liabilities, total_assets)
@@ -489,9 +520,9 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Debt Service Coverage Ratio
-  ## @param float -- operating_income
-  ## @param float -- total_debt_service_costs
-  ## @return float
+  ## @param Decimal -- operating_income
+  ## @param Decimal -- total_debt_service_costs
+  ## @return Decimal
   ##--------------------------------------------------------------
   def dscr(_, 0), do: {:error, "total_debt_service_costs can't be zero (Divide by zero error)"}
   def dscr(operating_income, total_debt_service_costs)
@@ -504,7 +535,7 @@ defmodule Financials do
 
   ##--------------------------------------------------------------
   ## Debt to Asset Ratio Calculation
-  ## @param float -- total_debt
+  ## @param Decimal -- total_debt
   ## @param float -- total_assets
   ## @return float
   ##--------------------------------------------------------------
