@@ -18,7 +18,7 @@ The package can be installed by adding `financial` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:financials, "~> 0.0.0"}
+    {:financials, "~> 0.1.0"}
   ]
 end
 ```
@@ -49,7 +49,8 @@ Open an issue or create a fork and submit a pull request.
 
 ## Functions
 
-##### (All arguments and successful results are numerical)
+### @params :: All arguments must be decimals with the exception of "integer-type" arguments such as `days` which may be either decimal, float or int
+### @return :: All results within `:ok` tuples are Decimals
 
 #### Net Income
 

@@ -28,7 +28,7 @@ defmodule Financials do
   ##--------------------------------------------------------------
   @two_decimal_precision 2
   @arg_msg "Arguments must be decimals"
-  @zero_error "can't be zero (Divide by zero error)"
+  @zero_error "can't equal zero (Divide by zero error)"
 
 
   @doc """
@@ -124,9 +124,6 @@ defmodule Financials do
   @param Decimal -- operating_profit
   @param Decimal -- net_sales
   """
-  def ros(_, %Decimal{coef: 0} = _),
-      do: {:ok, D.new(0)}
-
   def ros(_, %Decimal{coef: 0} = _),
       do: {:error, "net_sales #{@zero_error}"}
 
@@ -336,7 +333,7 @@ defmodule Financials do
         %Decimal{} = total_credit_purchases,
         %Decimal{} = days
       ) do
-      credit_days = D.div(total_credit_purchases/D.new(days))
+      credit_days = D.div(total_credit_purchases, D.new(days))
       {:ok, D.div(average_accounts_payable, credit_days)}
   end
 
@@ -475,7 +472,7 @@ defmodule Financials do
         %Decimal{} = years
       )
     do
-      value_ratio = D.div(ending_investment_value/beginning_investment_value)
+      value_ratio = D.div(ending_investment_value, beginning_investment_value)
       time_ratio = D.div(D.new(1), years)
       res = :math.pow(D.to_float(value_ratio), D.to_float(time_ratio))
       {:ok, D.sub(D.new(res), D.new(1))}
@@ -609,7 +606,7 @@ defmodule Financials do
       do: {:error, "total_assets #{@zero_error}"}
 
   def debt_to_asset(%Decimal{} = total_debt, %Decimal{} = total_assets),
-      do: {:ok, D.div(total_debt/total_assets)}
+      do: {:ok, D.div(total_debt, total_assets)}
 
   def debt_to_asset(_, _),
       do: {:error, @arg_msg}
@@ -683,7 +680,7 @@ defmodule Financials do
       do: {:error, "shares_outstanding #{@zero_error}"}
 
   def eps_basic(%Decimal{} = earnings, %Decimal{} = shares_outstanding),
-      do: {:ok, D.div(earnings/shares_outstanding)}
+      do: {:ok, D.div(earnings, shares_outstanding)}
 
   def eps_basic(_, _),
       do: {:error, @arg_msg}
@@ -776,7 +773,7 @@ defmodule Financials do
       do: {:error, "shares_outstanding #{@zero_error}"}
 
   def eps_cash(%Decimal{} = operating_cash_flow, %Decimal{} = shares_outstanding),
-      do: {:ok, D.div(operating_cash_flow/shares_outstanding)}
+      do: {:ok, D.div(operating_cash_flow, shares_outstanding)}
 
   def eps_cash(_, _),
       do: {:error, @arg_msg}
@@ -1088,7 +1085,7 @@ defmodule Financials do
   @param float -- actual_sales
   @param float -- break_even_point
   """
-  def margin_of_safety_ratio(%Decimal{} = _, _),
+  def margin_of_safety_ratio(%Decimal{coef: 0} = _, _),
       do: {:error, "actual_sales #{@zero_error}"}
 
   def margin_of_safety_ratio(%Decimal{} = actual_sales, %Decimal{} = break_even_point),
@@ -1103,7 +1100,7 @@ defmodule Financials do
   @param float -- change_in_total_revenues
   @param float -- change_in_quantity_sold
   """
-  def margin_of_revenue(_, %Decimal{} = _),
+  def margin_of_revenue(_, %Decimal{coef: 0} = _),
       do: {:error, "change_in_quantity_sold #{@zero_error}"}
 
   def margin_of_revenue(%Decimal{} = change_in_total_revenues, %Decimal{} = change_in_quantity_sold),
