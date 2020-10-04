@@ -29,13 +29,13 @@ Requests return a 2-tuple with the standard `:ok` or `:error` status.
 
 ```elixir
 # Successful response
-{:ok, result} = Financials.debt_to_equity(100_000, 1_000_000)
+{:ok, result} = Financials.debt_to_equity(Decimal<100.23>, Decimal<25.32>)
 
 # Unsuccessful response due to argument type
-{:error, "Arguments must be numerical"} = Financials.net_income(100_000, "1_000_000")
+{:error, "Arguments must be decimals"} = Financials.net_income(123.23, "23.45")
 
 # Unsuccessful response due to argument value
-{:error, "total_equity can't be zero (Divide by zero error)"} = Financials.net_income(100_000, 0)
+{:error, "total_equity can't be zero (Divide by zero error)"} = Financials.net_income(Decimal<100000.00>, Decimal<0>)
 ```
 
 ## Future plans
