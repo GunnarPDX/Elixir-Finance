@@ -38,19 +38,80 @@ Requests return a 2-tuple with the standard `:ok` or `:error` status.
 {:error, "total_equity can't be zero (Divide by zero error)"} = Financials.net_income(Decimal<100000.00>, Decimal<0>)
 ```
 
-## Future plans
+### @params 
+```
+All arguments must be decimals with the exception of "strictly integer type" arguments such as `days` which may be either decimal, float or int.  If you are unsure just use decimals.
+```
 
-- 🎯 Improve decimal and rounding accuracy
-- 🔢 Config settings for parsing numerical values from string format
+### @return 
+```
+All results within `:ok` tuples are Decimals
+```
 
-## Contributing
+### Decimal Context
+- For more info check the decimals library docs [here](https://hexdocs.pm/decimal/readme.html#using-the-context)
 
-Open an issue or create a fork and submit a pull request.
+#### Using the context
+
+The context specifies the maximum precision of the result of calculations and
+the rounding algorithm if the result has a higher precision than the specified
+maximum. It also holds the list of set of trap enablers and the currently set
+flags.
+
+The context is stored in the process dictionary, this means that you don't have
+to pass the context around explicitly and the flags will be updated
+automatically.
+
+The context is accessed with `Decimal.Context.get/0` and set with
+`Decimal.Context.set/1`. It can also be temporarily set with
+`Decimal.Context.with/2`.
+
+```elixir
+iex> D.Context.get()
+%Decimal.Context{flags: [:rounded, :inexact], precision: 9, rounding: :half_up,
+ traps: [:invalid_operation, :division_by_zero]}
+iex> D.Context.with(%D.Context{precision: 2}, fn -> IO.inspect D.Context.get() end)
+%Decimal.Context{flags: [], precision: 2, rounding: :half_up,
+ traps: [:invalid_operation, :division_by_zero]}
+%Decimal.Context{flags: [], precision: 2, rounding: :half_up,
+ traps: [:invalid_operation, :division_by_zero]}
+iex> D.Context.set(%D.Context{D.Context.get() | traps: []})
+:ok
+iex> D.Context.get()
+%Decimal.Context{flags: [:rounded, :inexact], precision: 9, rounding: :half_up,
+ traps: []}
+```
+
+#### Precision and rounding
+
+The precision is used to limit the amount of decimal digits in the coefficient:
+
+```elixir
+iex> D.Context.set(%D.Context{D.Context.get() | precision: 9})
+:ok
+iex> D.div(100, 3)
+#Decimal<33.3333333>
+iex> D.Context.set(%D.Context{D.Context.get() | precision: 2})
+:ok
+iex> D.div(100, 3)
+#Decimal<33>
+```
+
+The rounding algorithm specifies how the result of an operation shall be rounded
+when it get be represented with the current precision:
+
+```elixir
+iex> D.Context.set(%D.Context{D.Context.get() | rounding: :half_up})
+:ok
+iex> D.div(31, 2)
+#Decimal<16>
+iex> D.Context.set(%D.Context{D.Context.get() | rounding: :floor})
+:ok
+iex> D.div(31, 2)
+#Decimal<15>
+```
 
 ## Functions
-
-### @params :: All arguments must be decimals with the exception of "integer-type" arguments such as `days` which may be either decimal, float or int
-### @return :: All results within `:ok` tuples are Decimals
 
 #### Net Income
 
@@ -361,4 +422,12 @@ margin_of_safety_ratio(actual_sales, break_even_point)
 ```elixir
 margin_of_revenue(change_in_total_revenues, change_in_quantity_sold)
 ```
+
+
+
+
+## Contributing
+
+Open an issue or create a fork and submit a pull request.
+
 
