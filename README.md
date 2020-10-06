@@ -39,14 +39,17 @@ All results within `:ok` tuples are Decimals, and are string error-messages in `
 
 #### Ex:
 ```elixir
+total_liabilities = D.new("100500700.45")
+total_equity = D.from_float(30050070.77)
+
 # Successful response
-{:ok, result} = Financials.debt_to_equity(Decimal<100.23>, Decimal<25.32>)
+{:ok, result} = Financials.debt_to_equity(total_liabilities, total_equity)
 
 # Unsuccessful response due to argument type
-{:error, "Arguments must be decimals"} = Financials.net_income(123.23, "23.45")
+{:error, "Arguments must be decimals"} = Financials.debt_to_equity(123.23, "23.45")
 
 # Unsuccessful response due to argument value
-{:error, "total_equity can't be zero (Divide by zero error)"} = Financials.net_income(Decimal<100000.00>, Decimal<0>)
+{:error, "total_equity can't be zero (Divide by zero error)"} = Financials.debt_to_equity(total_liabilities, 0)
 ```
 
 
@@ -70,15 +73,15 @@ The context is accessed with `Decimal.Context.get/0` and set with
 
 ```elixir
 iex> D.Context.get()
-# %Decimal.Context{flags: [:rounded, :inexact], precision: 9, rounding: :half_up,
-#  traps: [:invalid_operation, :division_by_zero]}
+ %Decimal.Context{flags: [:rounded, :inexact], precision: 9, rounding: :half_up,
+  traps: [:invalid_operation, :division_by_zero]}
 
 iex> D.Context.set(%D.Context{D.Context.get() | traps: []})
-# :ok
+ :ok
 
 iex> D.Context.get()
-# %Decimal.Context{flags: [:rounded, :inexact], precision: 9, rounding: :half_up,
-#  traps: []}
+ %Decimal.Context{flags: [:rounded, :inexact], precision: 9, rounding: :half_up,
+  traps: []}
 ```
 
 #### Precision and rounding
@@ -87,16 +90,16 @@ The precision is used to limit the amount of decimal digits in the coefficient:
 
 ```elixir
 iex> D.Context.set(%D.Context{D.Context.get() | precision: 9})
-# :ok
+ :ok
 
 iex> D.div(100, 3)
-# Decimal<33.3333333>
+ #Decimal<33.3333333>
 
 iex> D.Context.set(%D.Context{D.Context.get() | precision: 2})
-# :ok
+ :ok
 
 iex> D.div(100, 3)
-# Decimal<33>
+ #Decimal<33>
 ```
 
 The rounding algorithm specifies how the result of an operation shall be rounded
@@ -104,16 +107,16 @@ when it get be represented with the current precision:
 
 ```elixir
 iex> D.Context.set(%D.Context{D.Context.get() | rounding: :half_up})
-# :ok
+ :ok
 
 iex> D.div(31, 2)
-# Decimal<16>
+ #Decimal<16>
 
 iex> D.Context.set(%D.Context{D.Context.get() | rounding: :floor})
-# :ok
+ :ok
 
 iex> D.div(31, 2)
-# Decimal<15>
+ #Decimal<15>
 ```
 
 ## Functions
