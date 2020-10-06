@@ -38,12 +38,12 @@ Requests return a 2-tuple with the standard `:ok` or `:error` status.
 {:error, "total_equity can't be zero (Divide by zero error)"} = Financials.net_income(Decimal<100000.00>, Decimal<0>)
 ```
 
-### @params 
+### Params 
 ```
 All arguments must be decimals with the exception of "strictly integer type" arguments such as `days` which may be either decimal, float or int.  If you are unsure just use decimals.
 ```
 
-### @return 
+### Return Values
 ```
 All results within `:ok` tuples are Decimals
 ```
