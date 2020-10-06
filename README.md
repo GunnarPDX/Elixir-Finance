@@ -39,6 +39,7 @@ All results within `:ok` tuples are Decimals, and are string error-messages in `
 
 #### Ex:
 ```elixir
+# Use Decimals
 total_liabilities = D.new("100500700.45")
 total_equity = D.from_float(30050070.77)
 
