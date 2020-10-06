@@ -25,8 +25,21 @@ end
 
 ## Usage
 
+### Params 
+
+All arguments must be decimals with the exception of "strictly integer type" arguments such as `days` which may be either decimal, float or int. 
+ 
+If you are unsure just use decimals.
+
+
+### Return Values
+
 Requests return a 2-tuple with the standard `:ok` or `:error` status.
 
+All results within `:ok` tuples are Decimals.
+
+
+#### Ex:
 ```elixir
 # Successful response
 {:ok, result} = Financials.debt_to_equity(Decimal<100.23>, Decimal<25.32>)
@@ -38,17 +51,8 @@ Requests return a 2-tuple with the standard `:ok` or `:error` status.
 {:error, "total_equity can't be zero (Divide by zero error)"} = Financials.net_income(Decimal<100000.00>, Decimal<0>)
 ```
 
-### Params 
-```
-All arguments must be decimals with the exception of "strictly integer type" arguments such as `days` which may be either decimal, float or int.  If you are unsure just use decimals.
-```
 
-### Return Values
-```
-All results within `:ok` tuples are Decimals
-```
-
-### Decimal Context
+## Decimal Context
 - For more info check the decimals library docs [here](https://hexdocs.pm/decimal/readme.html#using-the-context)
 
 #### Using the context
