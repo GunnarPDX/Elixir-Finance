@@ -70,16 +70,13 @@ The context is accessed with `Decimal.Context.get/0` and set with
 
 ```elixir
 iex> D.Context.get()
-
 #%Decimal.Context{flags: [:rounded, :inexact], precision: 9, rounding: :half_up,
 # traps: [:invalid_operation, :division_by_zero]}
 
 iex> D.Context.set(%D.Context{D.Context.get() | traps: []})
-
 #:ok
 
 iex> D.Context.get()
-
 #%Decimal.Context{flags: [:rounded, :inexact], precision: 9, rounding: :half_up,
 # traps: []}
 ```
@@ -91,10 +88,13 @@ The precision is used to limit the amount of decimal digits in the coefficient:
 ```elixir
 iex> D.Context.set(%D.Context{D.Context.get() | precision: 9})
 #:ok
+
 iex> D.div(100, 3)
 #Decimal<33.3333333>
+
 iex> D.Context.set(%D.Context{D.Context.get() | precision: 2})
 #:ok
+
 iex> D.div(100, 3)
 #Decimal<33>
 ```
