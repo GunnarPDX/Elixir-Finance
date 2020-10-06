@@ -51,7 +51,7 @@ All results within `:ok` tuples are Decimals, and are string error-messages in `
 
 
 ## Decimal Context
-- For more info check the decimals library docs [here](https://hexdocs.pm/decimal/readme.html#using-the-context)
+- For more info check the `Decimal` hex docs [here](https://hexdocs.pm/decimal/readme.html#using-the-context).
 
 #### Using the context
 
