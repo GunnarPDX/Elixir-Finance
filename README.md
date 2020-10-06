@@ -104,11 +104,14 @@ when it get be represented with the current precision:
 
 ```elixir
 iex> D.Context.set(%D.Context{D.Context.get() | rounding: :half_up})
-:ok
+#:ok
+
 iex> D.div(31, 2)
 #Decimal<16>
+
 iex> D.Context.set(%D.Context{D.Context.get() | rounding: :floor})
-:ok
+#:ok
+
 iex> D.div(31, 2)
 #Decimal<15>
 ```
