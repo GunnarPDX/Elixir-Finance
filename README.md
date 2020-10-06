@@ -50,7 +50,7 @@ total_equity = D.from_float(30050070.77)
 {:error, "Arguments must be decimals"} = Financials.debt_to_equity(123.23, "23.45")
 
 # Unsuccessful response due to argument value
-{:error, "total_equity can't be zero (Divide by zero error)"} = Financials.debt_to_equity(total_liabilities, 0)
+{:error, "total_equity can't equal zero (Divide by zero error)"} = Financials.debt_to_equity(total_liabilities, 0)
 ```
 
 
