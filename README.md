@@ -27,16 +27,14 @@ end
 
 ### Params 
 
-All arguments must be decimals with the exception of "strictly integer type" arguments such as `days` which may be either decimal, float or int. 
- 
-If you are unsure just use decimals.
+All arguments must be decimals with the exception of "strictly integer type" arguments such as `days` which may be either decimal, float or int. If you are unsure just use decimals.
 
 
 ### Return Values
 
 Requests return a 2-tuple with the standard `:ok` or `:error` status.
 
-All results within `:ok` tuples are Decimals.
+All results within `:ok` tuples are Decimals, and are string error-messages in `:error` tuples.
 
 
 #### Ex:
