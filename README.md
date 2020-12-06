@@ -1,5 +1,5 @@
 
-# Elixir Finanancial Library 🏦
+# Elixir Financial Library 🏦
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 [![Hex.pm Version](http://img.shields.io/hexpm/v/financials.svg?style=flat)](https://hex.pm/packages/financials)
